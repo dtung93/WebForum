@@ -1,0 +1,528 @@
+{
+  "individualResults": [
+    {
+      "initialSchemaVersion": "1.1",
+      "targetSchemaVersion": null,
+      "schemaName": "",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": true,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-05-09T14:56:25.614992700",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "1.1",
+      "targetSchemaVersion": null,
+      "schemaName": "",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": true,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-05-09T14:58:29.272943100",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "1.1",
+      "targetSchemaVersion": null,
+      "schemaName": "",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": true,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-05-09T15:14:08.342403200",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "1.1",
+      "targetSchemaVersion": null,
+      "schemaName": "",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": true,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-05-09T15:17:31.569444",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "1.1",
+      "targetSchemaVersion": null,
+      "schemaName": "",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": true,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-05-09T15:24:10.060999900",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "1.1",
+      "targetSchemaVersion": null,
+      "schemaName": "",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": true,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-05-09T15:29:45.632849900",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "1.1",
+      "targetSchemaVersion": null,
+      "schemaName": "",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": true,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-05-09T15:32:50.704378200",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "1.1",
+      "targetSchemaVersion": null,
+      "schemaName": "",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": true,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-05-09T15:34:37.370442200",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "1.1",
+      "targetSchemaVersion": null,
+      "schemaName": "",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": true,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-05-09T15:36:43.245842400",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "1.1",
+      "targetSchemaVersion": null,
+      "schemaName": "",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": true,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-05-09T15:37:09.909367",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "1.1",
+      "targetSchemaVersion": null,
+      "schemaName": "",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": true,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-05-09T15:41:35.089371900",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "1.1",
+      "targetSchemaVersion": null,
+      "schemaName": "",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": true,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-05-09T15:42:05.632814",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "1.1",
+      "targetSchemaVersion": null,
+      "schemaName": "",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": true,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-05-09T15:46:58.849876700",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "1.1",
+      "targetSchemaVersion": "1.2",
+      "schemaName": "",
+      "migrations": [
+        {
+          "category": "Versioned",
+          "version": "1.2",
+          "description": "CREATE TABLES",
+          "type": "SQL",
+          "filepath": "C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V1.2__CREATE_TABLES.sql",
+          "executionTime": 128
+        }
+      ],
+      "migrationsExecuted": 1,
+      "success": true,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-05-09T15:49:03.404358100",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "1.2",
+      "targetSchemaVersion": "1.3",
+      "schemaName": "",
+      "migrations": [
+        {
+          "category": "Versioned",
+          "version": "1.3",
+          "description": "CREATE JOIN TABLE ADD FK",
+          "type": "SQL",
+          "filepath": "C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V1.3__CREATE_JOIN_TABLE_ADD_FK.sql",
+          "executionTime": 273
+        }
+      ],
+      "migrationsExecuted": 1,
+      "success": true,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-05-09T16:35:06.397602900",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "1.3",
+      "targetSchemaVersion": null,
+      "schemaName": "",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": false,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-05-09T16:51:02.267681500",
+      "operation": "migrate",
+      "exception": "Migration V1.4__ALTER_TABLE_ADD_FK.sql failed\n---------------------------------------------\nSQL State  : 42000\nError Code : 1072\nMessage    : (conn\u003d130) Key column \u0027post_id\u0027 doesn\u0027t exist in table\nLocation   : src\\main\\resources\\db\\db\\migration\\V1.4__ALTER_TABLE_ADD_FK.sql (C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V1.4__ALTER_TABLE_ADD_FK.sql)\nLine       : 38\nStatement  : CREATE TABLE post_commendation (\r\n                                    user_id BIGINT NOT NULL,\r\n                                    commendation_type VARCHAR(255) NOT NULL,\r\n                                    count INT,\r\n                                    CONSTRAINT fk_post_commendations_post FOREIGN KEY (post_id) REFERENCES post(id)\r\n)\n",
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "1.3",
+      "targetSchemaVersion": null,
+      "schemaName": "",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": false,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-05-09T16:52:39.620206300",
+      "operation": "migrate",
+      "exception": "Migration V1.4__ALTER_TABLE_ADD_FK.sql failed\n---------------------------------------------\nSQL State  : 42S22\nError Code : 1054\nMessage    : (conn\u003d136) Unknown column \u0027post_id\u0027 in \u0027user_saved_thread\u0027\nLocation   : src\\main\\resources\\db\\db\\migration\\V1.4__ALTER_TABLE_ADD_FK.sql (C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V1.4__ALTER_TABLE_ADD_FK.sql)\nLine       : 1\nStatement  : ALTER TABLE user_saved_thread\r\n    RENAME COLUMN post_id TO thread_id\n",
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "1.3",
+      "targetSchemaVersion": null,
+      "schemaName": "",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": false,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-05-09T17:00:04.577096100",
+      "operation": "migrate",
+      "exception": "Migration V1.4__ALTER_TABLE_ADD_FK.sql failed\n---------------------------------------------\nSQL State  : 42S22\nError Code : 1054\nMessage    : (conn\u003d142) Unknown column \u0027post_id\u0027 in \u0027user_saved_thread\u0027\nLocation   : src\\main\\resources\\db\\db\\migration\\V1.4__ALTER_TABLE_ADD_FK.sql (C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V1.4__ALTER_TABLE_ADD_FK.sql)\nLine       : 1\nStatement  : ALTER TABLE user_saved_thread\r\n    RENAME COLUMN post_id TO thread_id\n",
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "1.3",
+      "targetSchemaVersion": null,
+      "schemaName": "",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": false,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [
+        "outOfOrder mode is active. Migration of schema `webblog` may not be reproducible."
+      ],
+      "timestamp": "2023-05-09T17:05:19.493088600",
+      "operation": "migrate",
+      "exception": "Migration V1.4__ALTER_TABLE_ADD_FK.sql failed\n---------------------------------------------\nSQL State  : 42S22\nError Code : 1054\nMessage    : (conn\u003d146) Unknown column \u0027post_id\u0027 in \u0027user_saved_thread\u0027\nLocation   : src\\main\\resources\\db\\db\\migration\\V1.4__ALTER_TABLE_ADD_FK.sql (C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V1.4__ALTER_TABLE_ADD_FK.sql)\nLine       : 1\nStatement  : ALTER TABLE user_saved_thread\r\n    RENAME COLUMN post_id TO thread_id\n",
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": null,
+      "targetSchemaVersion": null,
+      "schemaName": "",
+      "migrations": [
+        {
+          "category": "Versioned",
+          "version": "1.1",
+          "description": "CREATE TABLES",
+          "type": "SQL",
+          "filepath": "C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V1.1__CREATE_TABLES.sql",
+          "executionTime": 110
+        }
+      ],
+      "migrationsExecuted": 1,
+      "success": false,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [
+        "outOfOrder mode is active. Migration of schema `webblog` may not be reproducible."
+      ],
+      "timestamp": "2023-05-09T17:20:34.826877100",
+      "operation": "migrate",
+      "exception": "Migration V1.2__CREATE_TABLES.sql failed\n----------------------------------------\nSQL State  : 42S01\nError Code : 1050\nMessage    : (conn\u003d158) Table \u0027user\u0027 already exists\nLocation   : src\\main\\resources\\db\\db\\migration\\V1.2__CREATE_TABLES.sql (C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V1.2__CREATE_TABLES.sql)\nLine       : 1\nStatement  : CREATE TABLE user (\r\n                      `id` BIGINT(20) NOT NULL AUTO_INCREMENT,\r\n                      `username` VARCHAR(20) NOT NULL,\r\n                      `password` VARCHAR(200) NOT NULL,\r\n                      `email` VARCHAR(50) NOT NULL,\r\n                      `phone` VARCHAR(12) NOT NULL,\r\n                      `address` VARCHAR(100),\r\n                      `badge` VARCHAR(30) NOT NULL ,\r\n                      `created_date` DATE NOT NULL,\r\n                      `created_by` VARCHAR(20) NOT NULL,\r\n                      `updated_date` DATE NOT NULL,\r\n                      `updated_by`  VARCHAR(20) NOT NULL,\r\n                      `removal_flag` NUMERIC(1,0) NOT NULL DEFAULT 0,\r\n                      PRIMARY KEY (`id`)\r\n)\n",
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": null,
+      "targetSchemaVersion": "1.5",
+      "schemaName": "",
+      "migrations": [
+        {
+          "category": "Versioned",
+          "version": "1.1",
+          "description": "CREATE TABLES",
+          "type": "SQL",
+          "filepath": "C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V1.1__CREATE_TABLES.sql",
+          "executionTime": 143
+        },
+        {
+          "category": "Versioned",
+          "version": "1.3",
+          "description": "CREATE JOIN TABLE ADD FK",
+          "type": "SQL",
+          "filepath": "C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V1.3__CREATE_JOIN_TABLE_ADD_FK.sql",
+          "executionTime": 236
+        },
+        {
+          "category": "Versioned",
+          "version": "1.4",
+          "description": "ALTER TABLE ADD FK",
+          "type": "SQL",
+          "filepath": "C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V1.4__ALTER_TABLE_ADD_FK.sql",
+          "executionTime": 123
+        },
+        {
+          "category": "Versioned",
+          "version": "1.5",
+          "description": "CREATE ALTER ADD TABLE",
+          "type": "SQL",
+          "filepath": "C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V1.5__CREATE_ALTER_ADD_TABLE.sql",
+          "executionTime": 68
+        }
+      ],
+      "migrationsExecuted": 4,
+      "success": true,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [
+        "outOfOrder mode is active. Migration of schema `webblog` may not be reproducible."
+      ],
+      "timestamp": "2023-05-09T17:26:40.117639",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "1.8",
+      "targetSchemaVersion": null,
+      "schemaName": "",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": false,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-05-10T15:44:41.877255700",
+      "operation": "migrate",
+      "exception": "Migration V1.9__CREATE_ROLES_ALTER_TABLE_USER.sql failed\n--------------------------------------------------------\nSQL State  : 42000\nError Code : 1075\nMessage    : (conn\u003d247) Incorrect table definition; there can be only one auto column and it must be defined as a key\nLocation   : src\\main\\resources\\db\\db\\migration\\V1.9__CREATE_ROLES_ALTER_TABLE_USER.sql (C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V1.9__CREATE_ROLES_ALTER_TABLE_USER.sql)\nLine       : 7\nStatement  : CREATE TABLE role (\r\n    id INT NOT NULL AUTO_INCREMENT,\r\n    name VARCHAR(10)NOT NULL\r\n)\n",
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": null,
+      "targetSchemaVersion": "2.0",
+      "schemaName": "",
+      "migrations": [
+        {
+          "category": "Versioned",
+          "version": "1.1",
+          "description": "CREATE TABLES",
+          "type": "SQL",
+          "filepath": "C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V1.1__CREATE_TABLES.sql",
+          "executionTime": 110
+        },
+        {
+          "category": "Versioned",
+          "version": "1.3",
+          "description": "CREATE JOIN TABLE ADD FK",
+          "type": "SQL",
+          "filepath": "C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V1.3__CREATE_JOIN_TABLE_ADD_FK.sql",
+          "executionTime": 225
+        },
+        {
+          "category": "Versioned",
+          "version": "1.4",
+          "description": "ALTER TABLE ADD FK",
+          "type": "SQL",
+          "filepath": "C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V1.4__ALTER_TABLE_ADD_FK.sql",
+          "executionTime": 88
+        },
+        {
+          "category": "Versioned",
+          "version": "1.5",
+          "description": "CREATE ALTER ADD TABLE",
+          "type": "SQL",
+          "filepath": "C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V1.5__CREATE_ALTER_ADD_TABLE.sql",
+          "executionTime": 67
+        },
+        {
+          "category": "Versioned",
+          "version": "1.6",
+          "description": "ALTER TABLE USER FILE POST",
+          "type": "SQL",
+          "filepath": "C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V1.6__ALTER_TABLE_USER_FILE_POST.sql",
+          "executionTime": 4
+        },
+        {
+          "category": "Versioned",
+          "version": "1.8",
+          "description": "ALTER TABLE USER FILE POST 3",
+          "type": "SQL",
+          "filepath": "C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V1.8__ALTER_TABLE_USER_FILE_POST_3.sql",
+          "executionTime": 461
+        },
+        {
+          "category": "Versioned",
+          "version": "1.9",
+          "description": "CREATE ROLES ALTER TABLE USER",
+          "type": "SQL",
+          "filepath": "C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V1.9__CREATE_ROLES_ALTER_TABLE_USER.sql",
+          "executionTime": 63
+        },
+        {
+          "category": "Versioned",
+          "version": "2.0",
+          "description": "CREATE TABLE ROLE USER ROLE",
+          "type": "SQL",
+          "filepath": "C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V2.0__CREATE_TABLE_ROLE_USER_ROLE.sql",
+          "executionTime": 47
+        }
+      ],
+      "migrationsExecuted": 8,
+      "success": true,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-05-10T15:49:34.441631100",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "2.0",
+      "targetSchemaVersion": "2.1",
+      "schemaName": "",
+      "migrations": [
+        {
+          "category": "Versioned",
+          "version": "2.1",
+          "description": "ALTER TABLE USER ADD LOGIN ATTEMPT",
+          "type": "SQL",
+          "filepath": "C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V2.1__ALTER_TABLE_USER_ADD_LOGIN_ATTEMPT.sql",
+          "executionTime": 96
+        }
+      ],
+      "migrationsExecuted": 1,
+      "success": true,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-05-15T14:58:25.914588500",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "2.1",
+      "targetSchemaVersion": "2.3",
+      "schemaName": "",
+      "migrations": [
+        {
+          "category": "Versioned",
+          "version": "2.3",
+          "description": "ALTER TABLE USER RENAME LOGIN ATTEMPT",
+          "type": "SQL",
+          "filepath": "C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V2.3__ALTER_TABLE_USER_RENAME_LOGIN_ATTEMPT.sql",
+          "executionTime": 52
+        }
+      ],
+      "migrationsExecuted": 1,
+      "success": true,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-05-15T16:49:25.947870500",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    }
+  ]
+}

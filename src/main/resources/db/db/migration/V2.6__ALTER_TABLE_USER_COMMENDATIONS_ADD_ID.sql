@@ -1,0 +1,4 @@
+ALTER TABLE user_commendation
+        ADD id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY ;
+
+
