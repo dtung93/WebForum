@@ -10,6 +10,7 @@ import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import io.jsonwebtoken.*;
 import org.flywaydb.core.internal.util.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -34,7 +35,10 @@ import java.time.Instant;
 @Component
 public class JwtTokenProvider {
   SecretSigningKey signingKey = new SecretSigningKey();
-  String secretKey = signingKey.getSecretKey();
+
+  @Value("${jwt.secret.key}")
+  private String secretKey;
+
 
   public String createToken(Authentication authentication) throws Exception {
     CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
