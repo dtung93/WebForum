@@ -41,16 +41,19 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Bean
   @Override
-  public AuthenticationManager authenticationManager () throws Exception{
+  public AuthenticationManager authenticationManager() throws Exception {
     return super.authenticationManager();
   }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-      http.csrf().ignoringAntMatchers("/api/auth/sign-in","/api/auth/sign-up").and().authorizeRequests()
-          .antMatchers("/","/home").permitAll()
-              .antMatchers("/api/auth/sign-in","/api/auth/sign-up").permitAll().
-          anyRequest().authenticated().and().apply(new JwtConfigurer(jwtTokenProvider));
+    http.csrf().ignoringAntMatchers("/api/auth/sign-in", "/api/auth/sign-up","/api/mail/**","/api/modify-user/**","/test").and().authorizeRequests()
+        .antMatchers("/test").hasRole("USER").antMatchers("/", "/home").permitAll().
+        antMatchers("/api/auth/sign-in", "/api/auth/sign-up").permitAll().
+        antMatchers("/api/mail/**").permitAll().antMatchers("/api/modify-user/**").permitAll().
+        antMatchers("/api/dxt/mod/auth/**").hasAnyRole("ADMIN","MODERATOR").
+        antMatchers("/api/dxt/admin/auth/**").hasRole("ADMIN").
+        anyRequest().authenticated().and().apply(new JwtConfigurer(jwtTokenProvider));
   }
 
   public PasswordEncoder passwordEncoder() {

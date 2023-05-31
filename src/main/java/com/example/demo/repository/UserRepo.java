@@ -18,8 +18,13 @@ import java.util.List;
 @Repository
 public interface UserRepo extends JpaRepository<User,Long> {
   User findByUsername(String username);
+  User findByEmail(String email);
+  @Query(nativeQuery = true, value="SELECT * FROM USER u WHERE u.activate_token=:activate_token")
+  User findByActivateToken(@Param("activate_token") String activate_token);
 
 
+  @Query(nativeQuery = true, value = "SELECT * FROM USER u where u.change_password_token=:change_password_token")
+  User findByChangePasswordToken(@Param("change_password_token") String change_password_token);
 
   @Query(nativeQuery = true, value = "SELECT  * FROM USER u WHERE u.username=:username or u.email=:username")
   List<User> findByUsernameOrEmail(@Param("username") String username);

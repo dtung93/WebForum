@@ -1,10 +1,12 @@
 package com.example.demo.model;
 
 import com.example.demo.enums.ThreadCategory;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +21,7 @@ import java.util.Set;
 @Table(name="thread")
 @Getter
 @Setter
-public class Thread extends Information {
+public class Thread extends Information implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,14 +31,14 @@ public class Thread extends Information {
     @Enumerated(EnumType.STRING)
     private ThreadCategory category;
 
-    @OneToMany(mappedBy = "thread", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "thread", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Post> posts = new HashSet<>();
 
     @JoinColumn(name = "username")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
-    @ManyToMany(mappedBy = "savedThreads")
+    @ManyToMany(mappedBy = "savedThreads", fetch = FetchType.EAGER)
     private Set<User> users = new HashSet<>();
 
     @Column(name="last_replied")
@@ -54,12 +56,13 @@ public class Thread extends Information {
             "id=" + id +
             ", title='" + title + '\'' +
             ", category=" + category +
-            ", posts=" + posts +
-            ", user=" + user +
-            ", users=" + users +
             ", lastReplied='" + lastReplied + '\'' +
             ", views=" + views +
             ", removalFlag=" + removalFlag +
+            ", createdBy='" + createdBy + '\'' +
+            ", createdDate=" + createdDate +
+            ", updatedBy='" + updatedBy + '\'' +
+            ", updatedDate=" + updatedDate +
             '}';
     }
 }

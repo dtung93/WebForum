@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.PostDTO;
-import com.example.demo.model.Post;
+import com.example.demo.model.User;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,6 +11,9 @@ import org.springframework.stereotype.Service;
  * @screen_ID:
  */
 @Service
-public interface PostService {
-  PostDTO createPost(String username, byte[]content);
+public interface ModeratorService {
+
+  User getByUsername(String username);
+
+  boolean removeLogInAttempt(String username);
 }

@@ -4,7 +4,10 @@ import com.example.demo.dto.AuthenticateDTO;
 import com.example.demo.dto.SignUpDTO;
 import com.example.demo.dto.UserInfoDTO;
 import com.example.demo.dto.UserStatisticsDTO;
+import com.example.demo.model.User;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 /**
  * Class
@@ -15,16 +18,17 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface AuthenticationService {
-  UserInfoDTO signIn(AuthenticateDTO request) throws Exception;
+  Map<String,Object> signIn(AuthenticateDTO request) throws Exception;
   UserStatisticsDTO getUserStatistics(String username);
 
-  UserInfoDTO signUp(SignUpDTO request);
+  Map<String,Object> signUp(SignUpDTO request) throws Exception;
 
   boolean checkUserExistByUsername(String username);
   boolean checkUserExistByEmail(String email);
 
-  boolean checkLoginAttempt(String username);
-
   String authenticate(String username, String password) throws Exception;
 
+  boolean verifyConfirmAccount(String activateToken) throws Exception;
+
+  boolean verifyResetPassword(String token, String newPassword) throws Exception;
 }

@@ -1,6 +1,7 @@
 package com.example.demo.dto;
 
 import com.example.demo.impl.CustomUserDetails;
+import com.example.demo.model.Role;
 import com.example.demo.model.User;
 import com.example.demo.model.UserCommendation;
 import lombok.Getter;
@@ -26,8 +27,7 @@ public class UserInfoDTO implements Serializable {
   private String address;
   private String badge;
   private Set<UserCommendation> commendations;
-  private String accessToken;
-  private String tokenType = "Bearer";
+  public String accessToken;
 
   @Override
   public String toString() {
@@ -38,7 +38,6 @@ public class UserInfoDTO implements Serializable {
         ", badge='" + badge + '\'' +
         ", commendations=" + commendations +
         ", accessToken='" + accessToken + '\'' +
-        ", tokenType='" + tokenType + '\'' +
         '}';
   }
 }

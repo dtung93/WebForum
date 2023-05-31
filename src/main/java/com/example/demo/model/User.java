@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import com.example.demo.enums.Badge;
 import com.example.demo.enums.Commendation;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -40,27 +41,30 @@ public class User extends Information implements java.io.Serializable  {
     @Column(name="address")
     private String address;
 
-    @OneToMany(mappedBy = "user")
+
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     private Set<UserFilePost> userFilePosts = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
+
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     private Set<Message> messages = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_saved_post",
         joinColumns = @JoinColumn(name="user_id"),
         inverseJoinColumns = @JoinColumn(name="post_id")
     )
     private Set<Post> savedPosts = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_saved_thread",
         joinColumns = @JoinColumn(name="user_id"),
         inverseJoinColumns = @JoinColumn(name="thread_id")
     )
     private Set<Post> savedThreads = new HashSet<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
     private Set<UserCommendation> commendations = new HashSet<>();
 
     public void addCommendation(Commendation commendation, int count) {
@@ -87,6 +91,7 @@ public class User extends Information implements java.io.Serializable  {
     @Column(name="badge")
     private String badge;
 
+
     @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(name = "user_role",
         joinColumns = @JoinColumn(name="user_id"),
@@ -94,7 +99,7 @@ public class User extends Information implements java.io.Serializable  {
     )
     private Set<Role> roles = new HashSet <>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     private Set<UserFile> files = new HashSet<>();
 
     @Column(name="activate_token")
@@ -121,14 +126,9 @@ public class User extends Information implements java.io.Serializable  {
             ", email='" + email + '\'' +
             ", phone='" + phone + '\'' +
             ", address='" + address + '\'' +
-            ", userFilePosts=" + userFilePosts +
-            ", messages=" + messages +
-            ", savedPosts=" + savedPosts +
-            ", savedThreads=" + savedThreads +
             ", commendations=" + commendations +
-            ", badge=" + badge +
+            ", badge='" + badge + '\'' +
             ", roles=" + roles +
-            ", files=" + files +
             ", activateToken='" + activateToken + '\'' +
             ", changePasswordToken='" + changePasswordToken + '\'' +
             ", removalFlag=" + removalFlag +
