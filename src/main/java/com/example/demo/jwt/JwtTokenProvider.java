@@ -34,7 +34,6 @@ import java.time.Instant;
  */
 @Component
 public class JwtTokenProvider {
-  SecretSigningKey signingKey = new SecretSigningKey();
 
   @Value("${jwt.secret.key}")
   private String secretKey;
@@ -50,7 +49,7 @@ public class JwtTokenProvider {
     Instant expiredInMinutes = currentTime.plus(Duration.ofMinutes(60 * 24 * 3));
     JWTClaimsSet.Builder jwtBuilder = new JWTClaimsSet.Builder();
     jwtBuilder.subject(user.getUsername());
-    jwtBuilder.claim("roles",roles);
+    jwtBuilder.claim("roles", roles);
     jwtBuilder.issueTime(Date.from(currentTime));
     jwtBuilder.expirationTime(Date.from(expiredInMinutes));
 
@@ -60,7 +59,7 @@ public class JwtTokenProvider {
     } catch (Exception e) {
       throw new Exception(e.getMessage());
     }
-    SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS512), jwtBuilder.build());
+    SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), jwtBuilder.build());
     try {
       signedJWT.sign(signer);
     } catch (JOSEException e) {
@@ -91,7 +90,7 @@ public class JwtTokenProvider {
     } catch (Exception e) {
       throw new Exception(e.getMessage());
     }
-    SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS512), jwtBuilder.build());
+    SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), jwtBuilder.build());
     try {
       signedJWT.sign(signer);
     } catch (JOSEException e) {
@@ -129,20 +128,25 @@ public class JwtTokenProvider {
     return null;
   }
 
-  //Return true if token is not expired, false if token is still valid, otherwise will throw error jwt expiration
+  //Return true if token is expired, false if token is still valid, otherwise will throw error jwt expiration
   public boolean checkIsTokenExpired(String token) {
     try {
-     SignedJWT signedJWT = SignedJWT.parse(token);
-     JWTClaimsSet claimsSet = signedJWT.getJWTClaimsSet();
-     Date expirationDate = claimsSet.getExpirationTime();
-     Date currentDate = new Date();
-     if(Objects.nonNull(expirationDate) && expirationDate.before(currentDate)){
-       return true;
-     }
-      JWSVerifier verifier = new MACVerifier(secretKey);
-      return signedJWT.verify(verifier);
+      SignedJWT signedJWT = SignedJWT.parse(token);
+      JWTClaimsSet claimsSet = signedJWT.getJWTClaimsSet();
+      Date expirationDate = claimsSet.getExpirationTime();
+      Date currentDate = new Date();
+      if (Objects.nonNull(expirationDate) && currentDate.before(expirationDate)) {
+        JWSVerifier verifier = new MACVerifier(secretKey);
+        if (Boolean.TRUE.equals(signedJWT.verify(verifier))) {
+          //Token is still VALID(OK-PASS)
+          return false;
+        }
+      }
+      //Token is INVALID-EXPIRED
+      return true;
     } catch (Exception e) {
       throw new JwtException("Invalid token", e);
     }
   }
 }
+
