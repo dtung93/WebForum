@@ -14,9 +14,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,7 +48,7 @@ public class JwtTokenProvider {
         .collect(Collectors.toList());
 
     Instant currentTime = Instant.now();
-    Instant expiredInMinutes = currentTime.plus(Duration.ofMinutes(60 * 24 * 3));
+    Instant expiredInMinutes = currentTime.plus(Duration.ofMinutes(60 * 24));
     JWTClaimsSet.Builder jwtBuilder = new JWTClaimsSet.Builder();
     jwtBuilder.subject(user.getUsername());
     jwtBuilder.claim("roles", roles);
@@ -99,22 +101,27 @@ public class JwtTokenProvider {
     return signedJWT.serialize();
   }
 
-  public Authentication getAuthentication(String token) {
-    Claims claims = Jwts.parser()
-        .setSigningKey(secretKey)
-        .parseClaimsJws(token)
-        .getBody();
+  public Authentication getAuthentication(String token) throws ParseException {
+    SignedJWT signedJWT = SignedJWT.parse(token);
+    JWTClaimsSet claimsSet = signedJWT.getJWTClaimsSet();
 
-    String username = claims.getSubject();
+    String username = claimsSet.getSubject();
 
-    List<GrantedAuthority> authorities = new ArrayList<>();
+    List<String> roles = new ArrayList<>();
+    roles = (List<String>) claimsSet.getClaim("roles");
+    List<GrantedAuthority> authorities = roles.stream()
+        .map(SimpleGrantedAuthority::new)
+        .collect(Collectors.toList());
     return new UsernamePasswordAuthenticationToken(username, "", authorities);
   }
 
   public boolean validateToken(String token) {
     try {
-      Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-      return true;
+      boolean isExpired = this.checkIsTokenExpired(token);
+      if (Boolean.FALSE.equals(isExpired)) {
+        return true;
+      } else
+        return false;
     } catch (JwtException | IllegalArgumentException e) {
       throw new JwtException("Invalid token");
     }

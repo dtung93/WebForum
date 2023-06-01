@@ -23,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.transaction.Transactional;
 import java.util.*;
 
 /**
@@ -199,6 +200,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
       throw new Exception(e.getMessage());
     }
   }
+
 
   @Override
   public boolean verifyResetPassword(String token, String newPassword) throws Exception {
