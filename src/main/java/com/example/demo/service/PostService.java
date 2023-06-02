@@ -4,6 +4,9 @@ import com.example.demo.dto.PostDTO;
 import com.example.demo.model.Post;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Class
  *
@@ -13,5 +16,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface PostService {
-  PostDTO createPost(String username, byte[]content);
+  List<PostDTO> getPostByThread(Long threadId);
+  Map<String, Object> comment(String username, Long threadId, String content);
 }

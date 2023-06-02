@@ -49,10 +49,13 @@ public class ThreadServiceImpl implements ThreadService {
       thread.setCategory(request.getCategory());
       thread.setTitle(request.getTitle());
       thread.setUser(user);
-      thread.setCreatedBy(request.getAuthor());
+      thread.setViews(0L);
+      thread.setLastReplied(user.getUsername());
+      thread.setCreatedBy(user.getUsername());
       thread.setCreatedDate(new Date());
-      thread.setUpdatedBy(request.getAuthor());
+      thread.setUpdatedBy(user.getUsername());
       thread.setUpdatedDate(thread.getCreatedDate());
+      thread.setRemovalFlag(false);
       Thread savedThread = threadRepo.save(thread);
       if (Objects.nonNull(savedThread)) {
         Post post = new Post();
@@ -63,6 +66,7 @@ public class ThreadServiceImpl implements ThreadService {
         post.setCreatedBy(user.getUsername());
         post.setUpdatedBy(user.getUsername());
         post.setUpdatedDate(savedThread.getCreatedDate());
+        post.setRemovalFlag(false);
         Post savedPost = postRepo.save(post);
         if (Objects.nonNull(savedPost)) {
           savedThread.getPosts().add(savedPost);

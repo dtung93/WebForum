@@ -24,22 +24,22 @@ import java.util.Date;
 @Setter
 public class Information {
     @CreatedBy
-    @Column(name = "created_by")
+    @Column(name = "created_by",columnDefinition = "ADMIN TUNG")
     protected String createdBy;
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "created_date")
+    @Column(name = "created_date",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     protected Date createdDate;
 
     @LastModifiedBy
-    @Column(name = "updated_by")
+    @Column(name = "updated_by",columnDefinition = "ADMIN TUNG")
     protected String updatedBy;
 
     @LastModifiedDate
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "updated_date")
+    @Column(name = "updated_date",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     protected Date updatedDate;
 }

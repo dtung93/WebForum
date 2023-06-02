@@ -1,0 +1,6 @@
+ALTER TABLE post
+    MODIFY COLUMN content VARCHAR(2500);
+
+ALTER TABLE message
+    MODIFY COLUMN content VARCHAR(775);
+

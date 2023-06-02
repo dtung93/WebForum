@@ -180,48 +180,5 @@ public class AuthenticationServiceImpl implements AuthenticationService {
       return false;
   }
 
-  //Check token expiration, type 1 is confirmation, 2 is changePassword
-  @Override
-  public boolean verifyConfirmAccount(String token) throws Exception {
-    try {
-      User user = userRepo.findByActivateToken(token);
-      if (Objects.nonNull(user)) {
-        boolean isTokenExpired = jwtTokenProvider.checkIsTokenExpired(user.getActivateToken());
-        if (Boolean.FALSE.equals(isTokenExpired)) {
-          user.setActivateToken(null);
-          userRepo.save(user);
-          return true;
-        }
-        else
-          return false;
-      } else
-        return false;
-    } catch (Exception e) {
-      throw new Exception(e.getMessage());
-    }
-  }
 
-
-  @Override
-  public boolean verifyResetPassword(String token, String newPassword) throws Exception {
-    try {
-      User user = userRepo.findByChangePasswordToken(token);
-      if (Objects.nonNull(user)) {
-        boolean isTokenExpired = jwtTokenProvider.checkIsTokenExpired(user.getChangePasswordToken());
-        if(Boolean.FALSE.equals(isTokenExpired)){
-          user.setChangePasswordToken(null);
-          String encodedPassword = passwordEncoder.encode(newPassword);
-          user.setPassword(encodedPassword);
-          userRepo.save(user);
-          return true;
-        }
-        else
-          return false;
-      } else
-        return false;
-    } catch (Exception e) {
-      throw new Exception(e.getMessage());
-    }
-
-  }
 }

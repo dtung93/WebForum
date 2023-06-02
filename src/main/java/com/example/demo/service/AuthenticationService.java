@@ -28,7 +28,5 @@ public interface AuthenticationService {
 
   String authenticate(String username, String password) throws Exception;
 
-  boolean verifyConfirmAccount(String activateToken) throws Exception;
 
-  boolean verifyResetPassword(String token, String newPassword) throws Exception;
 }

@@ -1,12 +1,12 @@
 package com.example.demo.model;
 
 import com.example.demo.enums.Commendation;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Class
@@ -35,10 +35,10 @@ public class Post extends Information implements java.io.Serializable {
   @Column(name = "content")
   private String content;
 
-  @OneToMany(fetch = FetchType.EAGER,mappedBy = "post")
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "post")
   private Set<Image> postImages;
 
-  @OneToMany(fetch = FetchType.EAGER,mappedBy = "post")
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "post")
   private Set<Video> postVideos;
 
   @ManyToMany(mappedBy = "savedPosts", fetch = FetchType.EAGER)
@@ -47,24 +47,19 @@ public class Post extends Information implements java.io.Serializable {
   @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
   private Set<UserFilePost> userFilePosts = new HashSet<>();
 
-  @ElementCollection
-  @CollectionTable(name = "post_commendations",
-      joinColumns = @JoinColumn(name = "post_id")
-  )
-  @MapKeyColumn(name = "commendation_type")
-  @Column(name = "count")
-  private Map<Commendation, Integer> commendations = new HashMap<>();
+  @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @MapKey(name = "commendation")
+  private Map<Commendation, PostCommendation> commendations = new HashMap<>();
 
   @Column(name = "removal_flag")
   private Boolean removalFlag;
 
-
-  public void addCommendationCount(Commendation commendation, int count) {
-    commendations.put(commendation, count);
-  }
-
-  public int getCommendationCount(Commendation commendation) {
-    return commendations.getOrDefault(commendation, 0);
+  private Map<Commendation,Integer> getCommendationCount(){
+    Map<Commendation,Integer> result = new HashMap<>();
+    for(Commendation key : commendations.keySet()){
+      result.put(key, commendations.get(key).getCount());
+    }
+    return result;
   }
 
   @Override

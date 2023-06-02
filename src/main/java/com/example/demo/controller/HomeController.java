@@ -5,6 +5,7 @@ import org.apache.coyote.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
@@ -17,6 +18,7 @@ import java.util.Objects;
  * @screen_ID:
  */
 @RestController
+@RequestMapping("home")
 public class HomeController {
   private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
@@ -26,14 +28,13 @@ public class HomeController {
     return ResponseEntity.ok("hello boy");
   }
 
-  @PostMapping("/test")
-  public ResponseEntity<?> test2(@RequestBody NewThreadDTO request){
-    if(Objects.nonNull(request)){
+  @PostMapping("/{username}/test")
+  @PreAuthorize("#username == authentication.name")
+  public ResponseEntity<?> test2(@PathVariable String username, @RequestBody NewThreadDTO request) {
+    if (Objects.nonNull(request)) {
       return ResponseEntity.ok("TEST SUCCESS");
-    }
-    else
+    } else
       return ResponseEntity.internalServerError().body("FAILED TEST");
-
   }
 
 }

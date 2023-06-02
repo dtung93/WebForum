@@ -20,7 +20,7 @@ import java.util.Set;
 public class PostDTO extends Information {
   private Long threadId;
   private String author;
-  private byte[] content;
+  private String content;
   private Set<UserFilePost> userFilePosts;
   private Set<Commendation> commendations;
 

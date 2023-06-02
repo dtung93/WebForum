@@ -6,6 +6,7 @@ import com.example.demo.model.CustomException;
 import com.example.demo.model.User;
 import com.example.demo.service.AuthenticationService;
 import com.example.demo.service.MailService;
+import com.example.demo.service.ModifyUserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,9 @@ public class MailController {
   @Autowired
   private AuthenticationService authenticationService;
 
+  @Autowired
+  private ModifyUserService modifyUserService;
+
   @PostMapping("/recover-password")
   public ResponseEntity<?> changePasswordEmail(@RequestBody EmailDTO request) throws Exception {
     try {
@@ -49,7 +53,7 @@ public class MailController {
   @GetMapping("/verify")
   public ResponseEntity<?> confirmAccount(@RequestParam("activationToken") String activationToken) throws Exception {
     try {
-      boolean verified = authenticationService.verifyConfirmAccount(activationToken);
+      boolean verified = modifyUserService.verifyConfirmAccount(activationToken);
       if (Boolean.TRUE.equals(verified)) {
         return ResponseEntity.ok("Thank you! Your account has been verified");
       } else
