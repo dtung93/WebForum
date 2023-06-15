@@ -20,17 +20,13 @@ import java.io.Serializable;
 public class Video extends Information implements Serializable {
   @Column(name = "id")
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private String id;
 
   @Column(name="title")
   private String title;
 
   @Column(name="duration")
   private Integer duration;
-
-  @Column(name="content")
-  private byte[] data;
 
   @Column(name="description")
   private String description;
@@ -47,5 +43,14 @@ public class Video extends Information implements Serializable {
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "post_id")
   private Post post;
+
+  @Column(name="web_content_link")
+  private String webContentLink;
+
+  @Column(name="thumb_nail_link")
+  private String thumbNailLink;
+
+  @Column(name="web_view_link")
+  private String webViewLink;
 
 }

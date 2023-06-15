@@ -10,10 +10,14 @@ import com.example.demo.repository.UserRepo;
 import com.example.demo.service.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 
+import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,25 +41,42 @@ public class PostServiceImpl implements PostService {
 
   private static final String ERROR = "Invalid Credentials";
   private static final String INVALID_THREAD = "Invalid thread not found!";
+  ModelMapper mapper = new ModelMapper();
 
   @Override
-  public List<PostDTO> getPostByThread(Long threadId) {
-    List<Post> listPosts = postRepo.getPostByThreadId(threadId);
-    ModelMapper mapper = new ModelMapper();
-    List<PostDTO> result = listPosts.stream().map(post -> mapper.map(post,PostDTO.class)).collect(Collectors.toList());
-    return result;
+  public Map<String,Object> getPostByThread(Long threadId, int pageNumber, int pageSize) {
+    int offset = pageNumber * pageSize;
+    Map<String,Object> output = new HashMap<>();
+    Pageable pageable = new PageDataOffset(offset,pageSize, Sort.by("createdDate").ascending());
+    Page<Post> listPost = postRepo.getPostsByThreadId(threadId,pageable);
+    Page<PostDTO> posts = listPost.map(post -> {
+      PostDTO postDTO =  mapper.map(post,PostDTO.class);
+      postDTO.setAuthor(post.getCreatedBy());
+      return postDTO;
+        }
+    );
+    output.put("currentPage",posts.getPageable().getPageNumber());
+    output.put("pageSize",posts.getSize());
+    output.put("totalPages",posts.getTotalPages());
+    output.put("lastPage",posts.isLast());
+    output.put("firstPage",posts.isFirst());
+    output.put("offset",posts.getPageable().getOffset());
+    output.put("items",posts.getContent());
+    return output;
   }
 
   @Override
+  @Transactional
   public Map<String, Object> comment(String username, Long threadId, String content) {
     Map<String, Object> result = new HashMap<>();
-    if (Objects.isNull(username) || Objects.isNull(content) || Objects.isNull(threadId) || StringUtils.containsWhitespace(content)) {
+    if (Objects.isNull(username) || Objects.isNull(content) || Objects.isNull(threadId) || content.isEmpty()) {
       result.put(ERROR, "Username and content must not be null");
       return result;
     }
     User user = userRepo.findByUsername(username);
     if (Objects.nonNull(user)) {
-      Thread thread = threadRepo.findById(threadId).orElse(null);
+      Optional<Thread> threadOptional = threadRepo.findById(threadId);
+      Thread thread = threadOptional.orElse(null);
       if (Objects.nonNull(thread)) {
         Post post = new Post();
         post.setUser(user);
@@ -68,13 +89,17 @@ public class PostServiceImpl implements PostService {
         post.setContent(content);
         Post savedPost = postRepo.save(post);
         if (Objects.nonNull(savedPost)) {
-          result.put("New comment", savedPost);
+          PostDTO output = mapper.map(savedPost,PostDTO.class);
+          output.setAuthor(savedPost.getCreatedBy());
+          result.put("New comment", output);
           return result;
         }
-        result.put("Exception when saving post", "Could not perform query operation");
-      } else
-        result.put(INVALID_THREAD, "Invalid thread Id");
+        result.put("Invalid operation", "Could not perform save post operation");
+        return result;
+      }
+      result.put(ERROR, "Invalid thread Id!");
       return result;
+
     } else
       result.put(ERROR, "Invalid username!");
     return result;

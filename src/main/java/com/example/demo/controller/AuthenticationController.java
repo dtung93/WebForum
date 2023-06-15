@@ -6,6 +6,7 @@ import com.example.demo.model.CustomException;
 import com.example.demo.dto.ExceptionDTO;
 import com.example.demo.dto.UserInfoDTO;
 import com.example.demo.service.AuthenticationService;
+import com.example.demo.utilities.Utils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
@@ -33,6 +34,9 @@ public class AuthenticationController {
   @Autowired
   private AuthenticationService authenticationService;
 
+  @Autowired
+  private Utils utils;
+
   @PostMapping("/sign-in")
   public ResponseEntity<?> signIn(@RequestBody AuthenticateDTO request, HttpServletRequest http) throws Exception {
     try {
@@ -41,13 +45,12 @@ public class AuthenticationController {
       if (response.containsKey("authenticationError")) {
         ExceptionDTO error = this.errorHandle(http, response);
         return ResponseEntity.badRequest().body(error);
-
       } else {
         return ResponseEntity.ok(response);
       }
 
     } catch (Exception e) {
-      throw new Exception(e.getMessage());
+      return ResponseEntity.internalServerError().body(utils.handleError(http,2,e));
     }
   }
 
@@ -62,7 +65,7 @@ public class AuthenticationController {
       } else
         return ResponseEntity.ok(response);
     } catch (Exception e) {
-      throw new Exception(e.getMessage());
+      return ResponseEntity.internalServerError().body(utils.handleError(http,2,e));
     }
   }
 

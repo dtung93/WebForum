@@ -23,7 +23,7 @@ import java.util.Set;
 public class MessageFile {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private String id;
 
   @Column(name= "tag")
   @Enumerated(EnumType.STRING)
@@ -38,24 +38,17 @@ public class MessageFile {
   @Column(name = "file_size")
   private Integer fileSize;
 
-  @Column(name = "file_data")
-  @Lob
-  private byte[] fileData;
-
   @ManyToOne
   @JoinColumn(name = "message_id")
   private Message message;
 
-  @Override
-  public String toString() {
-    return "MessageFile{" +
-        "id=" + id +
-        ", tag=" + tag +
-        ", fileName='" + fileName + '\'' +
-        ", fileType='" + fileType + '\'' +
-        ", fileSize=" + fileSize +
-        ", fileData=" + Arrays.toString(fileData) +
-        ", message=" + message +
-        '}';
-  }
+  @Column(name="web_content_link")
+  private String webContentLink;
+
+  @Column(name="thumb_nail_link")
+  private String thumbNailLink;
+
+  @Column(name="web_view_link")
+  private String webViewLink;
+
 }

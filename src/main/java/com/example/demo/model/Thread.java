@@ -18,51 +18,53 @@ import java.util.Set;
  * @screen_ID:
  */
 @Entity
-@Table(name="thread")
+@Table(name = "thread")
 @Getter
 @Setter
 public class Thread extends Information implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(name="title")
-    private String title;
-    @Enumerated(EnumType.STRING)
-    private ThreadCategory category;
+  @Column(name = "title")
+  private String title;
 
-    @OneToMany(mappedBy = "thread", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Post> posts = new HashSet<>();
 
-    @JoinColumn(name = "username")
-    @ManyToOne(fetch = FetchType.EAGER)
-    private User user;
+  @Enumerated(EnumType.STRING)
+  private ThreadCategory category;
 
-    @ManyToMany(mappedBy = "savedThreads", fetch = FetchType.EAGER)
-    private Set<User> users = new HashSet<>();
+  @OneToMany(mappedBy = "thread", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  private Set<Post> posts = new HashSet<>();
 
-    @Column(name="last_replied")
-    private String lastReplied;
+  @JoinColumn(name = "user_id")
+  @ManyToOne(fetch = FetchType.EAGER)
+  private User user;
 
-    @Column(name="views")
-    private Long views;
+  @ManyToMany(mappedBy = "savedThreads", fetch = FetchType.EAGER)
+  private Set<User> users = new HashSet<>();
 
-    @Column(name="removal_flag")
-    private Boolean removalFlag;
+  @Column(name = "last_replied")
+  private String lastReplied;
 
-    @Override
-    public String toString() {
-        return "Thread{" +
-            "id=" + id +
-            ", title='" + title + '\'' +
-            ", category=" + category +
-            ", lastReplied='" + lastReplied + '\'' +
-            ", views=" + views +
-            ", removalFlag=" + removalFlag +
-            ", createdBy='" + createdBy + '\'' +
-            ", createdDate=" + createdDate +
-            ", updatedBy='" + updatedBy + '\'' +
-            ", updatedDate=" + updatedDate +
-            '}';
-    }
+  @Column(name = "views")
+  private Long views;
+
+  @Column(name = "removal_flag")
+  private Boolean removalFlag;
+
+  @Override
+  public String toString() {
+    return "Thread{" +
+        "id=" + id +
+        ", title='" + title + '\'' +
+        ", category=" + category +
+        ", lastReplied='" + lastReplied + '\'' +
+        ", views=" + views +
+        ", removalFlag=" + removalFlag +
+        ", createdBy='" + createdBy + '\'' +
+        ", createdDate=" + createdDate +
+        ", updatedBy='" + updatedBy + '\'' +
+        ", updatedDate=" + updatedDate +
+        '}';
+  }
 }

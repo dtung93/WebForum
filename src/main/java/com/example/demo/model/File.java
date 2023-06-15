@@ -23,9 +23,9 @@ import java.util.Set;
 public class File extends Information implements java.io.Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private String id;
 
-  @Column(name= "tag")
+  @Column(name = "tag")
   @Enumerated(EnumType.STRING)
   private FileTag tag;
 
@@ -38,14 +38,18 @@ public class File extends Information implements java.io.Serializable {
   @Column(name = "file_size")
   private Integer fileSize;
 
-  @Column(name = "file_data")
-  @Lob
-  private byte[] fileData;
-
-  @Column(name="removal_flag")
+  @Column(name = "removal_flag")
   private Boolean removalFlag;
 
   @OneToMany(mappedBy = "file")
   private Set<UserFilePost> userFilePosts = new HashSet<>();
 
+  @Column(name="web_content_link")
+  private String webContentLink;
+
+  @Column(name="thumb_nail_link")
+  private String thumbNailLink;
+
+  @Column(name="web_view_link")
+  private String webViewLink;
 }

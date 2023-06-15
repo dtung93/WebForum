@@ -1,10 +1,10 @@
 package com.example.demo.model;
 
+import com.example.demo.enums.FileTag;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import com.example.demo.enums.FileTag;
 
 import java.util.Arrays;
 

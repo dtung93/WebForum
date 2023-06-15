@@ -12,6 +12,9 @@ import com.example.demo.repository.UserRepo;
 import com.example.demo.service.ThreadService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -19,6 +22,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * Class
@@ -39,7 +43,7 @@ public class ThreadServiceImpl implements ThreadService {
   private ThreadRepo threadRepo;
 
   private static final String error = "error";
-
+  ModelMapper mapper = new ModelMapper();
 
   public Map<String, Object> createThreadMethod(NewThreadDTO request) {
     User user = userRepo.findByUsername(request.getAuthor());
@@ -87,6 +91,24 @@ public class ThreadServiceImpl implements ThreadService {
     } else
       result.put(error, "Username " + request.getAuthor() + " not found!");
     return result;
+  }
+
+
+  @Override
+  public Map<String,Object> getThreadByCategory(ThreadCategory category, int pageNumber, int pageSize) {
+    int offset = pageNumber * pageSize;
+    Map<String,Object> output = new HashMap<>();
+    Pageable pageable = new PageDataOffset(offset, pageSize, Sort.by("updatedDate").descending());
+    Page<Thread> pageThread= threadRepo.getThreadByCategory(category,pageable);
+    Page<ThreadDTO> result= pageThread.map((item)->mapper.map(item, ThreadDTO.class));
+    output.put("currentPage",result.getPageable().getPageNumber());
+    output.put("pageSize",result.getSize());
+    output.put("totalPages",result.getTotalPages());
+    output.put("lastPage",result.isLast());
+    output.put("firstPage",result.isFirst());
+    output.put("offset",result.getPageable().getOffset());
+    output.put("items",result.getContent());
+    return output;
   }
 
   @Transactional

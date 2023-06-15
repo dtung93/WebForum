@@ -36,7 +36,7 @@ public class MailServiceImpl implements MailService {
   private JwtTokenProvider jwtTokenProvider;
 
   @Override
-  public boolean sendConfirmationEmail(EmailDTO request) throws MessagingException {
+  public void sendConfirmationEmail(EmailDTO request) throws MessagingException {
     try {
       String subject = "DXT Forum account confirmation";
       String content = "Hello " + request.getUsername() + ", <br>" +
@@ -46,9 +46,8 @@ public class MailServiceImpl implements MailService {
           "<br>" +
           "<hr>" +
           "<br>" +
-          "<img src='logo.png'>";
+          "<img src='cid:logo'>";
       utils.sendEmail(request, subject, content);
-      return true;
     } catch (Exception e) {
       throw new MessagingException(e.getMessage());
     }
@@ -70,7 +69,7 @@ public class MailServiceImpl implements MailService {
             "<br>" +
             "<hr>" +
             "<br>" +
-            "<img src='logo.png'>";
+            "<img src='cid:logo'>";
         utils.sendEmail(request, subject, content);
         return true;
       } else {

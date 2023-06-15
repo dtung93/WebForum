@@ -26,12 +26,11 @@ public class PostCommendation extends Information {
   @JoinColumn(name = "post_id")
   private Post post;
 
-  @Column(name="commendation_type")
-  private String commendationType;
 
   @Enumerated(EnumType.STRING)
   private Commendation commendation;
 
+  @Column(name = "count")
   private Integer count;
 
   @Override
@@ -39,7 +38,6 @@ public class PostCommendation extends Information {
     return "PostCommendation{" +
         "id=" + id +
         ", post=" + post +
-        ", commendationType='" + commendationType + '\'' +
         ", commendation=" + commendation +
         ", count=" + count +
         '}';

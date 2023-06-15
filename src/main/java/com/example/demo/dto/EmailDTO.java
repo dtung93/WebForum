@@ -23,5 +23,4 @@ public class EmailDTO implements Serializable{
   private String email;
   private String token;
 
-
 }

@@ -10,7 +10,7 @@ package com.example.demo.enums;
 public enum ThreadCategory {
   TECH("Technology Discussion"),
   NEWS("National and International News"),
-  REVIEW("Product and Service reviews"),
+  REVIEWS("Product and Service reviews"),
   ANNOUNCEMENT("Administrator announcement"),
   NATURE("Nature and Geography"),
   GAME("Video games"),

@@ -8,10 +8,12 @@ import com.example.demo.repository.RoleRepo;
 import com.example.demo.repository.UserRepo;
 import com.example.demo.service.AuthenticationService;
 import com.example.demo.service.MailService;
+import com.example.demo.utilities.Utils;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -45,6 +47,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   private UserDetailsService userDetailsService;
 
   @Autowired
+  private Utils utils;
+
+  @Autowired
   private UserRepo userRepo;
 
   @Autowired
@@ -52,6 +57,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
   @Autowired
   private MailService mailService;
+
 
   private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
   private static final Logger logger = LoggerFactory.getLogger(AuthenticationServiceImpl.class);
@@ -112,6 +118,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
       response.put(invalidCredentials, "Username, email and password must not be empty");
       return response;
     }
+    if (Boolean.FALSE.equals(this.validateUsernamePassword(request.getUsername(), request.getPassword()))) {
+      response.put(invalidCredentials, "Username must have 4-20 characters, password must have 6-15 characters");
+      return response;
+    }
     if (this.checkUserExistByUsername(request.getUsername())) {
       response.put(invalidCredentials, "Username already exists!");
       return response;
@@ -120,33 +130,40 @@ public class AuthenticationServiceImpl implements AuthenticationService {
       response.put(invalidCredentials, "Email already exists!");
       return response;
     }
-
-    ModelMapper mapper = new ModelMapper();
-    String encodedPassword = passwordEncoder.encode(request.getPassword());
-    Role role = roleRepo.findById(1L).orElse(null);
-    User user = new User();
-    user.setUsername(request.getUsername());
-    user.setPassword(encodedPassword);
-    user.getRoles().add(role);
-    user.setBadge("New Member");
-    user.setEmail(request.getEmail());
-    user.setLoginAttempt(0);
-    user.setPhone("PhoneNumber");
-    user.setAddress("Location");
-    user.setCreatedBy("ADMIN");
-    user.setCreatedDate(new Date());
-    user.setUpdatedBy("ADMIN");
-    user.setUpdatedDate(new Date());
-    user.setActivateToken(jwtTokenProvider.generateToken(1));
-    user.setRemovalFlag(Boolean.FALSE);
-    User savedUser = userRepo.save(user);
-    UserInfoDTO result = mapper.map(savedUser, UserInfoDTO.class);
-    response.put("userInfo", result);
-    EmailDTO emailDTO = new EmailDTO();
-    emailDTO.setEmail(user.getEmail());
-    emailDTO.setUsername(user.getUsername());
-    emailDTO.setToken(user.getActivateToken());
-    mailService.sendConfirmationEmail(emailDTO);
+    if (Boolean.FALSE.equals(utils.isEmail(request.getEmail()))) {
+      response.put(invalidCredentials, request.getEmail() + " is not a valid email address, and must be 4-50 characters");
+      return response;
+    }
+    if (Boolean.FALSE.equals(utils.containsSpecialCharacters(request))) {
+      ModelMapper mapper = new ModelMapper();
+      String encodedPassword = passwordEncoder.encode(request.getPassword());
+      Role role = roleRepo.findById(1L).orElse(null);
+      User user = new User();
+      user.setUsername(request.getUsername());
+      user.setPassword(encodedPassword);
+      user.getRoles().add(role);
+      user.setBadge("New Member");
+      user.setEmail(request.getEmail());
+      user.setLoginAttempt(0);
+      user.setPhone("PhoneNumber");
+      user.setAddress("Location");
+      user.setCreatedBy("ADMIN");
+      user.setCreatedDate(new Date());
+      user.setUpdatedBy("ADMIN");
+      user.setUpdatedDate(new Date());
+      user.setActivateToken(jwtTokenProvider.generateToken(1));
+      user.setRemovalFlag(Boolean.FALSE);
+      User savedUser = userRepo.save(user);
+      UserInfoDTO result = mapper.map(savedUser, UserInfoDTO.class);
+      response.put("userInfo", result);
+      EmailDTO emailDTO = new EmailDTO();
+      emailDTO.setEmail(user.getEmail());
+      emailDTO.setUsername(user.getUsername());
+      emailDTO.setToken(user.getActivateToken());
+      mailService.sendConfirmationEmail(emailDTO);
+      return response;
+    } else
+      response.put(invalidCredentials, "Input contain special characters!");
     return response;
   }
 
@@ -162,6 +179,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     } else {
       return true;
     }
+  }
+
+  private boolean validateUsernamePassword(String username, String password) {
+    return username.length() >= 4
+        && username.length() <= 20
+        && password.length() >= 6
+        && password.length() <= 15;
   }
 
   @Override

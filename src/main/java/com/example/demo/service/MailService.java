@@ -17,7 +17,7 @@ import javax.mail.MessagingException;
 @Service
 public interface MailService {
 
-boolean sendConfirmationEmail(EmailDTO email) throws MessagingException;
+void sendConfirmationEmail(EmailDTO email) throws MessagingException;
 boolean sendChangePasswordEmail(EmailDTO email) throws MessagingException;
 
 }

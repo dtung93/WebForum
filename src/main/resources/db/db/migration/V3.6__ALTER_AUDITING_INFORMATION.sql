@@ -1,0 +1,5 @@
+ALTER TABLE user
+    MODIFY COLUMN created_by VARCHAR(20)  ;
+
+ALTER TABLE user
+    MODIFY COLUMN updated_by VARCHAR(20) ;

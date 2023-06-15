@@ -6,6 +6,7 @@ import com.example.demo.model.UserFilePost;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -21,7 +22,7 @@ public class PostDTO extends Information {
   private Long threadId;
   private String author;
   private String content;
-  private Set<UserFilePost> userFilePosts;
-  private Set<Commendation> commendations;
+  private Set<UserFilePost> userFilePosts = new HashSet<>();
+  private Set<Commendation> commendations = new HashSet<>();
 
 }

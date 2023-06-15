@@ -1,16 +1,13 @@
 package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.data.annotation.CreatedBy;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Column;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -20,11 +17,12 @@ import java.util.Date;
  * @function_Id:
  * @screen_ID:
  */
-@Getter
-@Setter
+@Data
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
+@EqualsAndHashCode(callSuper = false)
 public class Information {
-    @CreatedBy
-    @Column(name = "created_by",columnDefinition = "ADMIN TUNG")
+    @Column(name = "created_by",nullable = false)
     protected String createdBy;
 
     @CreatedDate
@@ -33,8 +31,8 @@ public class Information {
     @Column(name = "created_date",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     protected Date createdDate;
 
-    @LastModifiedBy
-    @Column(name = "updated_by",columnDefinition = "ADMIN TUNG")
+
+    @Column(name = "updated_by",nullable = false)
     protected String updatedBy;
 
     @LastModifiedDate

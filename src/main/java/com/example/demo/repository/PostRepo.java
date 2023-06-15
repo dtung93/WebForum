@@ -1,6 +1,8 @@
 package com.example.demo.repository;
 
 import com.example.demo.model.Post;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,6 +23,12 @@ public interface PostRepo extends JpaRepository<Post,Long> {
 
   @Query(nativeQuery = true, value = "SELECT * FROM POST p where p.thread_id =:threadId")
   List<Post> getPostByThreadId(@Param("threadId") Long threadId);
+
+  @Query("SELECT p FROM Post p where p.thread.id =:threadId")
+  Page<Post> getPostsByThreadId (@Param("threadId") Long threadId, Pageable pageable);
+
+  @Query("SELECT p FROM Post p INNER JOIN User u on u.id = p.user.id where p.user.id = :userId ")
+  Page<Post> getPostsByUserId(@Param("userId") Long userId,Pageable pageable);
 
   Optional<Post> findById(Long id);
   Post save (Post post);

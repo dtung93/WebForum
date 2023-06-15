@@ -20,14 +20,10 @@ import java.io.Serializable;
 public class Image extends Information implements Serializable {
   @Column(name = "id")
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private String id;
 
   @Column(name = "file_name")
   private String fileName;
-
-  @Column(name = "content")
-  private byte[] data;
 
   @Column(name = "description")
   private String description;
@@ -44,4 +40,14 @@ public class Image extends Information implements Serializable {
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "post_id")
   private Post post;
+
+  @Column(name="web_content_link")
+  private String webContentLink;
+
+  @Column(name="thumb_nail_link")
+  private String thumbNailLink;
+
+  @Column(name="web_view_link")
+  private String webViewLink;
+
 }

@@ -1,7 +1,10 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.NewThreadDTO;
+import com.example.demo.dto.ThreadDTO;
 import com.example.demo.enums.ThreadCategory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +19,7 @@ import java.util.Map;
  */
 @Service
 public interface ThreadService {
+  Map<String,Object> getThreadByCategory(ThreadCategory category, int pageNumber,int pageSize);
 
   Map<String,Object> createThread(NewThreadDTO request);
 }

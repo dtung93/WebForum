@@ -57,7 +57,7 @@ public class MailController {
       if (Boolean.TRUE.equals(verified)) {
         return ResponseEntity.ok("Thank you! Your account has been verified");
       } else
-        return ResponseEntity.internalServerError().body("Invalid token!");
+        return ResponseEntity.internalServerError().body("Invalid or expired token!");
     } catch (Exception e) {
       return ResponseEntity.internalServerError().body(e.getMessage());
     }

@@ -523,6 +523,105 @@
       "operation": "migrate",
       "exception": null,
       "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "3.8",
+      "targetSchemaVersion": null,
+      "schemaName": "",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": true,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-06-06T10:46:37.832708100",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "4.3",
+      "targetSchemaVersion": null,
+      "schemaName": "",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": false,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-06-13T10:00:45.227284100",
+      "operation": "migrate",
+      "exception": "Migration V4.4__ALTER_TABLE_IMAGE_VIDEO_CHANGE_ID_STRING.sql failed\n-------------------------------------------------------------------\nSQL State  : HY000\nError Code : 3780\nMessage    : (conn\u003d2178) Referencing column \u0027file_id\u0027 and referenced column \u0027id\u0027 in foreign key constraint \u0027user_file_post_file\u0027 are incompatible.\nLocation   : src\\main\\resources\\db\\db\\migration\\V4.4__ALTER_TABLE_IMAGE_VIDEO_CHANGE_ID_STRING.sql (C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V4.4__ALTER_TABLE_IMAGE_VIDEO_CHANGE_ID_STRING.sql)\nLine       : 11\nStatement  : ALTER TABLE file\r\n    DROP PRIMARY KEY,\r\n    MODIFY COLUMN id VARCHAR(300),\r\n    ADD PRIMARY KEY (id)\n",
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "4.3",
+      "targetSchemaVersion": null,
+      "schemaName": "",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": false,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-06-13T10:02:59.719930400",
+      "operation": "migrate",
+      "exception": "Migration V4.4__ALTER_TABLE_IMAGE_VIDEO_CHANGE_ID_STRING.sql failed\n-------------------------------------------------------------------\nSQL State  : HY000\nError Code : 3780\nMessage    : (conn\u003d2182) Referencing column \u0027file_id\u0027 and referenced column \u0027id\u0027 in foreign key constraint \u0027user_file_post_file\u0027 are incompatible.\nLocation   : src\\main\\resources\\db\\db\\migration\\V4.4__ALTER_TABLE_IMAGE_VIDEO_CHANGE_ID_STRING.sql (C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V4.4__ALTER_TABLE_IMAGE_VIDEO_CHANGE_ID_STRING.sql)\nLine       : 7\nStatement  : ALTER TABLE file\r\n    MODIFY COLUMN id VARCHAR(300) NOT NULL\n",
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "4.3",
+      "targetSchemaVersion": null,
+      "schemaName": "",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": false,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-06-13T10:06:37.008712700",
+      "operation": "migrate",
+      "exception": "Migration V4.4__ALTER_TABLE_IMAGE_VIDEO_CHANGE_ID_STRING.sql failed\n-------------------------------------------------------------------\nSQL State  : HY000\nError Code : 3780\nMessage    : (conn\u003d2188) Referencing column \u0027file_id\u0027 and referenced column \u0027id\u0027 in foreign key constraint \u0027user_file_post_file\u0027 are incompatible.\nLocation   : src\\main\\resources\\db\\db\\migration\\V4.4__ALTER_TABLE_IMAGE_VIDEO_CHANGE_ID_STRING.sql (C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V4.4__ALTER_TABLE_IMAGE_VIDEO_CHANGE_ID_STRING.sql)\nLine       : 16\nStatement  : -- Update the foreign key constraint\r\nALTER TABLE user_file_post\r\n    ADD CONSTRAINT user_file_post_file FOREIGN KEY (file_id) REFERENCES file(id)\n",
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "4.3",
+      "targetSchemaVersion": null,
+      "schemaName": "",
+      "migrations": [],
+      "migrationsExecuted": 0,
+      "success": false,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-06-13T10:08:55.990245400",
+      "operation": "migrate",
+      "exception": "Migration V4.4__ALTER_TABLE_IMAGE_VIDEO_CHANGE_ID_STRING.sql failed\n-------------------------------------------------------------------\nSQL State  : 42000\nError Code : 1091\nMessage    : (conn\u003d2192) Can\u0027t DROP \u0027user_file_post_file\u0027; check that column/key exists\nLocation   : src\\main\\resources\\db\\db\\migration\\V4.4__ALTER_TABLE_IMAGE_VIDEO_CHANGE_ID_STRING.sql (C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V4.4__ALTER_TABLE_IMAGE_VIDEO_CHANGE_ID_STRING.sql)\nLine       : 8\nStatement  : -- First, drop the foreign key constraint\r\nALTER TABLE user_file_post\r\n    DROP FOREIGN KEY user_file_post_file\n",
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "4.3",
+      "targetSchemaVersion": "4.4",
+      "schemaName": "",
+      "migrations": [
+        {
+          "category": "Versioned",
+          "version": "4.4",
+          "description": "ALTER TABLE IMAGE VIDEO CHANGE ID STRING",
+          "type": "SQL",
+          "filepath": "C:\\Users\\ITSJ-Group\\Desktop\\Projects\\WebForum\\webforum-be\\src\\main\\resources\\db\\db\\migration\\V4.4__ALTER_TABLE_IMAGE_VIDEO_CHANGE_ID_STRING.sql",
+          "executionTime": 168
+        }
+      ],
+      "migrationsExecuted": 1,
+      "success": true,
+      "flywayVersion": "9.17.0",
+      "database": "webblog",
+      "warnings": [],
+      "timestamp": "2023-06-13T10:09:58.013137600",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
     }
   ]
 }
