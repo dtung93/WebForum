@@ -8,6 +8,7 @@ import com.example.demo.repository.PostRepo;
 import com.example.demo.repository.ThreadRepo;
 import com.example.demo.repository.UserRepo;
 import com.example.demo.service.PostService;
+import com.example.demo.utilities.Utils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,6 +40,9 @@ public class PostServiceImpl implements PostService {
   @Autowired
   private ThreadRepo threadRepo;
 
+  @Autowired
+  private Utils utils;
+
   private static final String ERROR = "Invalid Credentials";
   private static final String INVALID_THREAD = "Invalid thread not found!";
   ModelMapper mapper = new ModelMapper();
@@ -55,14 +59,7 @@ public class PostServiceImpl implements PostService {
       return postDTO;
         }
     );
-    output.put("currentPage",posts.getPageable().getPageNumber());
-    output.put("pageSize",posts.getSize());
-    output.put("totalPages",posts.getTotalPages());
-    output.put("lastPage",posts.isLast());
-    output.put("firstPage",posts.isFirst());
-    output.put("offset",posts.getPageable().getOffset());
-    output.put("items",posts.getContent());
-    return output;
+    return utils.getPage(posts);
   }
 
   @Override

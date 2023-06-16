@@ -63,7 +63,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    http.csrf().ignoringAntMatchers("/api/auth/sign-in", "/api/auth/sign-up","/api/mail/**","/api/modify-user/**","/home/**","/api/post/**","/api/file/**").and().authorizeRequests()
+    http.csrf().ignoringAntMatchers("/api/auth/sign-in", "/api/auth/sign-up","/api/mail/**","/api/modify-user/**","/home/**","/api/post/**","/api/file/**","/api/dxt/mod/auth/**","/api/dxt/admin/auth/**").and().authorizeRequests()
         .antMatchers("/home/**").hasRole("USER").
         antMatchers("/api/post/**").hasAnyRole("USER","MODERATOR").
         antMatchers("/api/file/**").hasAnyRole("USER","MODERATOR","ADMIN").
@@ -89,6 +89,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
       response.getWriter().write(new ObjectMapper().writeValueAsString(exceptionDTO));
     };
   }
+
 
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();

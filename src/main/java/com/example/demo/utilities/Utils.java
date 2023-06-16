@@ -2,6 +2,7 @@ package com.example.demo.utilities;
 
 import com.example.demo.dto.EmailDTO;
 import com.example.demo.dto.ExceptionDTO;
+import com.example.demo.impl.PageDataOffset;
 import com.example.demo.jwt.JwtTokenProvider;
 import com.example.demo.model.CustomException;
 import com.example.demo.model.User;
@@ -9,6 +10,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -21,6 +25,7 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -97,7 +102,7 @@ public class Utils {
     return exceptionDTO;
   }
 
-  // Convert file size to KB,MB,GB,TB
+  // Convert file size and display it to KB,MB,GB,TB in DTO response
   public String getFileSize(long size) {
     long n = 1024;
     String s = "";
@@ -124,4 +129,19 @@ public class Utils {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     return Objects.nonNull(authentication) ? authentication.getName() : null;
   }
+
+  //Get items and page info method
+  public Map<String,Object> getPage(Page<?> page){
+    Map<String,Object> result = new HashMap<>();
+    result.put("currentPage",page.getPageable().getPageNumber());
+    result.put("numberOfItemsCurrentPage", page.getNumberOfElements());
+    result.put("pageSize",page.getSize());
+    result.put("totalPages",page.getTotalPages());
+    result.put("lastPage",page.isLast());
+    result.put("firstPage",page.isFirst());
+    result.put("offset",page.getPageable().getOffset());
+    result.put("items",page.getContent());
+    return result;
+  }
+
 }

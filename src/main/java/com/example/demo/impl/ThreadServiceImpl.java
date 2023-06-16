@@ -10,6 +10,7 @@ import com.example.demo.repository.PostRepo;
 import com.example.demo.repository.ThreadRepo;
 import com.example.demo.repository.UserRepo;
 import com.example.demo.service.ThreadService;
+import com.example.demo.utilities.Utils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,6 +42,9 @@ public class ThreadServiceImpl implements ThreadService {
 
   @Autowired
   private ThreadRepo threadRepo;
+
+  @Autowired
+  private Utils utils;
 
   private static final String error = "error";
   ModelMapper mapper = new ModelMapper();
@@ -97,18 +101,10 @@ public class ThreadServiceImpl implements ThreadService {
   @Override
   public Map<String,Object> getThreadByCategory(ThreadCategory category, int pageNumber, int pageSize) {
     int offset = pageNumber * pageSize;
-    Map<String,Object> output = new HashMap<>();
     Pageable pageable = new PageDataOffset(offset, pageSize, Sort.by("updatedDate").descending());
     Page<Thread> pageThread= threadRepo.getThreadByCategory(category,pageable);
     Page<ThreadDTO> result= pageThread.map((item)->mapper.map(item, ThreadDTO.class));
-    output.put("currentPage",result.getPageable().getPageNumber());
-    output.put("pageSize",result.getSize());
-    output.put("totalPages",result.getTotalPages());
-    output.put("lastPage",result.isLast());
-    output.put("firstPage",result.isFirst());
-    output.put("offset",result.getPageable().getOffset());
-    output.put("items",result.getContent());
-    return output;
+    return utils.getPage(result);
   }
 
   @Transactional

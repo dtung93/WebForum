@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.ExceptionDTO;
 import com.example.demo.dto.NewThreadDTO;
 import com.example.demo.dto.PostDTO;
+import com.example.demo.service.ModeratorService;
 import com.example.demo.service.PostService;
 import com.example.demo.service.ThreadService;
 import com.example.demo.utilities.Utils;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +35,9 @@ public class PostController {
 
   @Autowired
   private Utils utils;
+
+  @Autowired
+  private ModeratorService moderatorService;
 
   @PostMapping("new-thread")
   public ResponseEntity<?> createThread(HttpServletRequest http, @RequestBody NewThreadDTO request) {

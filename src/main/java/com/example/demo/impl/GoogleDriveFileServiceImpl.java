@@ -1,8 +1,6 @@
 package com.example.demo.impl;
 
 import com.example.demo.dto.GoogleDriveFileDTO;
-import com.example.demo.enums.FileTag;
-import com.example.demo.enums.FileTag;
 import com.example.demo.model.Image;
 import com.example.demo.model.Post;
 import com.example.demo.model.Video;
@@ -10,22 +8,14 @@ import com.example.demo.repository.ImageRepo;
 import com.example.demo.repository.PostRepo;
 import com.example.demo.repository.VideoRepo;
 import com.example.demo.utilities.Utils;
-import com.google.api.client.auth.oauth2.AuthorizationCodeFlow;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.googleapis.media.MediaHttpDownloader;
-import com.google.api.client.googleapis.media.MediaHttpUploader;
-import com.google.api.client.googleapis.media.MediaHttpUploaderProgressListener;
 import com.google.api.client.http.ByteArrayContent;
-import com.google.api.client.http.FileContent;
 import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.InputStreamContent;
-import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.util.Value;
@@ -33,10 +23,6 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
-import com.google.api.services.drive.model.FileList;
-import com.google.api.services.drive.model.Permission;
-import com.google.api.services.drive.model.PermissionList;
-import com.google.api.services.drive.model.User;
 import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -245,9 +231,9 @@ public class GoogleDriveFileServiceImpl {
     Tika tika = new Tika();
     String type = tika.detect(file.getInputStream());
     return type.startsWith("image/")
-        ||type.startsWith("application/vnd.ms-excel")
-        ||type.startsWith("application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-        ||type.startsWith("application/msword")
-        ||type.startsWith("application/pdf");
+        || type.startsWith("application/vnd.ms-excel")
+        || type.startsWith("application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+        || type.startsWith("application/msword")
+        || type.startsWith("application/pdf");
   }
 }

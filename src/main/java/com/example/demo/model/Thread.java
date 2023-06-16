@@ -52,6 +52,7 @@ public class Thread extends Information implements Serializable {
   @Column(name = "removal_flag")
   private Boolean removalFlag;
 
+
   @Override
   public String toString() {
     return "Thread{" +
