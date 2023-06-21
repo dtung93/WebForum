@@ -9,18 +9,19 @@ import com.example.demo.repository.ThreadRepo;
 import com.example.demo.repository.UserRepo;
 import com.example.demo.service.PostService;
 import com.example.demo.utilities.Utils;
+import com.google.gson.Gson;
+import net.spy.memcached.MemcachedClient;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.ModelMap;
-import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 /**
  * Class
@@ -44,21 +45,27 @@ public class PostServiceImpl implements PostService {
   private Utils utils;
 
   private static final String ERROR = "Invalid Credentials";
-  private static final String INVALID_THREAD = "Invalid thread not found!";
   ModelMapper mapper = new ModelMapper();
 
   @Override
-  public Map<String,Object> getPostByThread(Long threadId, int pageNumber, int pageSize) {
+  public Map<String, Object> getPostByThread(Long threadId, int pageNumber, int pageSize) {
+    String cacheKey = "posts_threadId_" + threadId + "_pageNumber_" + pageNumber + "_pageSize_" + pageSize;
+    var cacheResult = utils.getCacheValue(cacheKey);
+    if (Objects.nonNull(cacheResult)) {
+      return cacheResult;
+    }
     int offset = pageNumber * pageSize;
-    Map<String,Object> output = new HashMap<>();
-    Pageable pageable = new PageDataOffset(offset,pageSize, Sort.by("createdDate").ascending());
-    Page<Post> listPost = postRepo.getPostsByThreadId(threadId,pageable);
+    Pageable pageable = new PageDataOffset(offset, pageSize, Sort.by("createdDate").ascending());
+    Page<Post> listPost = postRepo.getPostsByThreadId(threadId, pageable);
     Page<PostDTO> posts = listPost.map(post -> {
-      PostDTO postDTO =  mapper.map(post,PostDTO.class);
-      postDTO.setAuthor(post.getCreatedBy());
-      return postDTO;
+          PostDTO postDTO = mapper.map(post, PostDTO.class);
+          postDTO.setAuthor(post.getCreatedBy());
+          return postDTO;
         }
     );
+    //Serialize the object to json for serialization;
+    var memcachedValue = new Gson().toJson(utils.getPage(posts));
+    utils.setCacheKey(cacheKey,memcachedValue);
     return utils.getPage(posts);
   }
 
@@ -86,7 +93,7 @@ public class PostServiceImpl implements PostService {
         post.setContent(content);
         Post savedPost = postRepo.save(post);
         if (Objects.nonNull(savedPost)) {
-          PostDTO output = mapper.map(savedPost,PostDTO.class);
+          PostDTO output = mapper.map(savedPost, PostDTO.class);
           output.setAuthor(savedPost.getCreatedBy());
           result.put("New comment", output);
           return result;
@@ -101,4 +108,5 @@ public class PostServiceImpl implements PostService {
       result.put(ERROR, "Invalid username!");
     return result;
   }
+
 }

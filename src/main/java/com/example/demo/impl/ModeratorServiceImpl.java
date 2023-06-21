@@ -5,6 +5,7 @@ import com.example.demo.model.User;
 import com.example.demo.repository.UserRepo;
 import com.example.demo.service.ModeratorService;
 import com.example.demo.utilities.Utils;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,30 +36,31 @@ public class ModeratorServiceImpl implements ModeratorService {
   @Override
   public User getByUsername(String username) {
     User user = userRepo.findByUsername(username);
-    return Objects.nonNull(user) ? user : null;
+    return Objects.nonNull(user)? user : null;
   }
 
   @Override
-  public Map<String,Object> getAllUsers(String username, int pageNumber, int pageSize) {
+  public Map<String, Object> getAllUsers(String username, int pageNumber, int pageSize) {
+    String key = "all_users";
     int offset = pageNumber * pageSize;
-    Pageable pageable = new PageDataOffset(offset,pageSize, Sort.by("created_date").descending());
-    Page<User> pages = userRepo.getAllUsers(username,pageable);
+    Pageable pageable = new PageDataOffset(offset, pageSize, Sort.by("created_date").descending());
+    Page<User> pages = userRepo.getAllUsers(username, pageable);
     return utils.getPage(pages);
   }
 
   @Override
   public Map<String, Object> getAllUsersByCreatedDate(String username, Date startDate, Date endDate, int pageNumber, int pageSize) {
     int offset = pageNumber * pageSize;
-    Pageable pageable = new PageDataOffset(offset,pageSize, Sort.by("created_date").descending());
-    Page<User> pages = userRepo.getUsersByUsernameAndCreatedDate(username,startDate,endDate,pageable);
+    Pageable pageable = new PageDataOffset(offset, pageSize, Sort.by("created_date").descending());
+    Page<User> pages = userRepo.getUsersByUsernameAndCreatedDate(username, startDate, endDate, pageable);
     return utils.getPage(pages);
   }
 
   @Override
   public Map<String, Object> getAllUsersByModifiedDate(String username, Date startDate, Date endDate, int pageNumber, int pageSize) {
     int offset = pageNumber * pageSize;
-    Pageable pageable = new PageDataOffset(offset,pageSize, Sort.by("created_date").descending());
-    Page<User> pages = userRepo.getUsersByUsernameAndModifyDate(username,startDate,endDate,pageable);
+    Pageable pageable = new PageDataOffset(offset, pageSize, Sort.by("created_date").descending());
+    Page<User> pages = userRepo.getUsersByUsernameAndModifyDate(username, startDate, endDate, pageable);
     return utils.getPage(pages);
   }
 

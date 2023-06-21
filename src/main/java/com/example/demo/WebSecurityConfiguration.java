@@ -64,8 +64,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.csrf().ignoringAntMatchers("/api/auth/sign-in", "/api/auth/sign-up","/api/mail/**","/api/modify-user/**","/home/**","/api/post/**","/api/file/**","/api/dxt/mod/auth/**","/api/dxt/admin/auth/**").and().authorizeRequests()
-        .antMatchers("/home/**").hasRole("USER").
-        antMatchers("/api/post/**").hasAnyRole("USER","MODERATOR").
+        .antMatchers("/home/**").permitAll().
+        antMatchers("/api/post/**").hasAnyRole("USER","MODERATOR","ADMIN").
         antMatchers("/api/file/**").hasAnyRole("USER","MODERATOR","ADMIN").
         antMatchers("/api/auth/sign-in", "/api/auth/sign-up").permitAll().
         antMatchers("/api/mail/**").permitAll().antMatchers("/api/modify-user/**").permitAll().

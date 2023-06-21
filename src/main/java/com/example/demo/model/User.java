@@ -41,6 +41,9 @@ public class User extends Information implements java.io.Serializable  {
     @Column(name="address")
     private String address;
 
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    private Set<UserPhoto> userPhotos;
+
 
     @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     private Set<UserFilePost> userFilePosts = new HashSet<>();
@@ -117,22 +120,4 @@ public class User extends Information implements java.io.Serializable  {
         loginAttempt++;
     }
 
-//    @Override
-//    public String toString() {
-//        return "User{" +
-//            "id=" + id +
-//            ", username='" + username + '\'' +
-//            ", password='" + password + '\'' +
-//            ", email='" + email + '\'' +
-//            ", phone='" + phone + '\'' +
-//            ", address='" + address + '\'' +
-//            ", commendations=" + commendations +
-//            ", badge='" + badge + '\'' +
-//            ", roles=" + roles +
-//            ", activateToken='" + activateToken + '\'' +
-//            ", changePasswordToken='" + changePasswordToken + '\'' +
-//            ", removalFlag=" + removalFlag +
-//            ", loginAttempt=" + loginAttempt +
-//            '}';
-//    }
 }

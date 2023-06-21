@@ -6,7 +6,10 @@ import com.example.demo.impl.PageDataOffset;
 import com.example.demo.jwt.JwtTokenProvider;
 import com.example.demo.model.CustomException;
 import com.example.demo.model.User;
+import com.google.gson.Gson;
+import net.spy.memcached.MemcachedClient;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
@@ -46,6 +49,9 @@ public class Utils {
 
   @Value("${email.regex}")
   private String emailRegex;
+
+  @Autowired
+  private MemcachedClient memcachedClient;
 
   public boolean containsSpecialCharacters(Object dto) throws IllegalAccessException {
     Class<?> dtoClass = dto.getClass();
@@ -92,7 +98,7 @@ public class Utils {
     return exceptionDTO;
   }
 
-  public ExceptionDTO errorResult(HttpServletRequest http,String exception, String message){
+  public ExceptionDTO errorResult(HttpServletRequest http, String exception, String message) {
     ExceptionDTO exceptionDTO = new ExceptionDTO();
     exceptionDTO.setError(exception);
     exceptionDTO.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
@@ -131,17 +137,38 @@ public class Utils {
   }
 
   //Get items and page info method
-  public Map<String,Object> getPage(Page<?> page){
-    Map<String,Object> result = new HashMap<>();
-    result.put("currentPage",page.getPageable().getPageNumber());
+  public Map<String, Object> getPage(Page<?> page) {
+    Map<String, Object> result = new HashMap<>();
+    result.put("currentPage", page.getPageable().getPageNumber());
     result.put("numberOfItemsCurrentPage", page.getNumberOfElements());
-    result.put("pageSize",page.getSize());
-    result.put("totalPages",page.getTotalPages());
-    result.put("lastPage",page.isLast());
-    result.put("firstPage",page.isFirst());
-    result.put("offset",page.getPageable().getOffset());
-    result.put("items",page.getContent());
+    result.put("pageSize", page.getSize());
+    result.put("totalPages", page.getTotalPages());
+    result.put("lastPage", page.isLast());
+    result.put("firstPage", page.isFirst());
+    result.put("offset", page.getPageable().getOffset());
+    result.put("items", page.getContent());
     return result;
   }
 
+  public void setCacheKey(String key, String jsonData) {
+    memcachedClient.set(key, 300, jsonData);
+  }
+
+  public Map<String, Object> getCacheValue(String cacheKey) {
+    String json = (String) memcachedClient.get(cacheKey);
+    if (Objects.nonNull(json)) {
+      Map<String, Object> cachedData = new Gson().fromJson(json, new TypeToken<Map<String, Object>>() {}.getType());
+      return cachedData;
+    } else
+      return null;
+  }
+
+  public Object getCacheObject(String cacheKey) {
+    String json = (String) memcachedClient.get(cacheKey);
+    if (Objects.nonNull(json)) {
+      Object cachedData = new Gson().fromJson(json, new TypeToken<Object>() {}.getType());
+      return cachedData;
+    } else
+      return null;
+  }
 }

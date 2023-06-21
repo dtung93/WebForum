@@ -11,7 +11,10 @@ import com.example.demo.repository.ThreadRepo;
 import com.example.demo.repository.UserRepo;
 import com.example.demo.service.ThreadService;
 import com.example.demo.utilities.Utils;
+import com.google.gson.Gson;
+import net.spy.memcached.MemcachedClient;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -49,7 +52,7 @@ public class ThreadServiceImpl implements ThreadService {
   private static final String error = "error";
   ModelMapper mapper = new ModelMapper();
 
-  public Map<String, Object> createThreadMethod(NewThreadDTO request) {
+  public Map<String, Object> createNewThread(NewThreadDTO request) {
     User user = userRepo.findByUsername(request.getAuthor());
     Map<String, Object> result = new HashMap<>();
     if (Objects.nonNull(user)) {
@@ -100,15 +103,22 @@ public class ThreadServiceImpl implements ThreadService {
 
   @Override
   public Map<String,Object> getThreadByCategory(ThreadCategory category, int pageNumber, int pageSize) {
+    String cacheKey = "category_" + category.toString() + "pageNumber_" + pageNumber + "_" + "pageSize_"+pageSize;
+    var cacheResult = utils.getCacheValue(cacheKey);
+    if(Objects.nonNull(cacheResult)){
+      return cacheResult;
+    }
     int offset = pageNumber * pageSize;
     Pageable pageable = new PageDataOffset(offset, pageSize, Sort.by("updatedDate").descending());
     Page<Thread> pageThread= threadRepo.getThreadByCategory(category,pageable);
     Page<ThreadDTO> result= pageThread.map((item)->mapper.map(item, ThreadDTO.class));
+    String json = new Gson().toJson(utils.getPage(result));
+    utils.setCacheKey(cacheKey,json);
     return utils.getPage(result);
   }
 
   @Transactional
   public Map<String, Object> createThread(NewThreadDTO request) {
-    return createThreadMethod(request);
+    return createNewThread(request);
   }
 }

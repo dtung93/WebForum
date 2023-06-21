@@ -19,8 +19,15 @@ import java.util.Map;
 public class ResponseDTO {
   private Integer status;
   private String url;
-  private Map<String,Object> data = new HashMap<>();
+  private Object data ;
   private String timestamp;
+
+  public ResponseDTO(Integer status, String url, Object data, String timestamp) {
+    this.status = status;
+    this.url = url;
+    this.data = data;
+    this.timestamp = timestamp;
+  }
 
   @Override
   public String toString() {

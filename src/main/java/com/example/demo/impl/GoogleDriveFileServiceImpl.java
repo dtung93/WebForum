@@ -1,12 +1,10 @@
 package com.example.demo.impl;
 
 import com.example.demo.dto.GoogleDriveFileDTO;
-import com.example.demo.model.Image;
-import com.example.demo.model.Post;
-import com.example.demo.model.Video;
-import com.example.demo.repository.ImageRepo;
-import com.example.demo.repository.PostRepo;
-import com.example.demo.repository.VideoRepo;
+import com.example.demo.enums.FileTag;
+import com.example.demo.model.*;
+import com.example.demo.repository.*;
+import com.example.demo.service.GoogleDriveFileService;
 import com.example.demo.utilities.Utils;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.auth.oauth2.Credential;
@@ -42,7 +40,7 @@ import java.util.*;
  * @screen_ID:
  */
 @Service
-public class GoogleDriveFileServiceImpl {
+public class GoogleDriveFileServiceImpl implements GoogleDriveFileService {
   @Value("${spring.security.oauth2.client.app-name}")
   private String APPLICATION_NAME;
 
@@ -63,11 +61,18 @@ public class GoogleDriveFileServiceImpl {
   @Autowired
   private VideoRepo videoRepo;
 
+  @Autowired
+  private UserPhotoRepo userPhotoRepo;
+
+  @Autowired
+  private UserRepo userRepo;
+
   public GoogleDriveFileServiceImpl() throws GeneralSecurityException, IOException {
     this.httpTransport = GoogleNetHttpTransport.newTrustedTransport();
     this.jsonFactory = GsonFactory.getDefaultInstance();
   }
 
+  @Override
   public Drive getDriveService() throws IOException {
     Credential credential = authorize();
     return new Drive.Builder(httpTransport, jsonFactory, credential)
@@ -92,6 +97,7 @@ public class GoogleDriveFileServiceImpl {
     return credential;
   }
 
+  @Override
   public List<GoogleDriveFileDTO> uploadFile(List<MultipartFile> files, Long postId) throws IOException {
     try {
       String username = utils.getCurrentUsername();
@@ -201,7 +207,59 @@ public class GoogleDriveFileServiceImpl {
     }
   }
 
+  @Override
+  public List<GoogleDriveFileDTO> uploadUserFile(List<MultipartFile> files, FileTag fileTag) throws IOException {
+    String username = utils.getCurrentUsername();
+    Drive driveService = getDriveService();
+    List<GoogleDriveFileDTO> uploadedFiles = new ArrayList<>();
+    User user = userRepo.findByUsername(username);
+    if(Objects.nonNull(user)){
+      for (MultipartFile file : files) {
+        File fileMetadata = new File();
+        fileMetadata.setName(file.getOriginalFilename());
+        ByteArrayContent mediaContent = new ByteArrayContent(file.getContentType(), file.getBytes());
+        File uploadedFile = driveService.files().create(fileMetadata, mediaContent)
+            .setFields("id, name, description, size, mimeType, createdTime, modifiedTime,webContentLink,webViewLink,thumbnailLink")
+            .execute();
 
+        UserPhoto image = new UserPhoto();
+        image.setId(uploadedFile.getId());
+        image.setUser(user);
+        image.setName(uploadedFile.getName());
+        image.setFileTag(fileTag);
+        image.setFileSize(Math.toIntExact(uploadedFile.getSize()));
+        image.setFileType(uploadedFile.getMimeType());
+        image.setCreatedBy(username);
+        image.setUpdatedBy(username);
+        image.setCreatedDate(new Date(uploadedFile.getCreatedTime().getValue()));
+        image.setUpdatedDate(new Date(uploadedFile.getModifiedTime().getValue()));
+        image.setRemovalFlag(false);
+        image.setDownloadLink(uploadedFile.getWebContentLink());
+        image.setViewLink(uploadedFile.getThumbnailLink());
+        UserPhoto savedImage = userPhotoRepo.save(image);
+        if (Objects.nonNull(savedImage)) {
+          GoogleDriveFileDTO googleDriveFileDTO = new GoogleDriveFileDTO();
+          googleDriveFileDTO.setId(uploadedFile.getId());
+          googleDriveFileDTO.setName(uploadedFile.getName());
+          googleDriveFileDTO.setShared(true);
+          googleDriveFileDTO.setCreatedBy(utils.getCurrentUsername());
+          googleDriveFileDTO.setUpdatedBy(utils.getCurrentUsername());
+          googleDriveFileDTO.setCreatedDate(new Date());
+          googleDriveFileDTO.setUpdatedDate(googleDriveFileDTO.getCreatedDate());
+          googleDriveFileDTO.setSize(utils.getFileSize(uploadedFile.getSize()));
+          googleDriveFileDTO.setWebViewLink(uploadedFile.getWebViewLink());
+          googleDriveFileDTO.setWebViewContentLink(uploadedFile.getWebContentLink());
+          googleDriveFileDTO.setThumbNailLink(uploadedFile.getThumbnailLink());
+          uploadedFiles.add(googleDriveFileDTO);
+        }
+      }
+      return uploadedFiles;
+    }
+    return uploadedFiles;
+  }
+
+
+  @Override
   public void downloadFile(String fileId, java.io.File destinationFile) throws IOException {
     Drive driveService = getDriveService();
 
@@ -221,12 +279,15 @@ public class GoogleDriveFileServiceImpl {
     return file.getWebViewLink();
   }
 
+
+  //Multimedia file. save to the video table
   private boolean isVideoFile(MultipartFile file) throws IOException {
     Tika tika = new Tika();
     String type = tika.detect(file.getInputStream());
     return type.startsWith("video/") || type.startsWith("audio/");
   }
 
+  //Document file, textual or graphical information. save to the image table
   private boolean isImageFile(MultipartFile file) throws IOException {
     Tika tika = new Tika();
     String type = tika.detect(file.getInputStream());
@@ -234,6 +295,54 @@ public class GoogleDriveFileServiceImpl {
         || type.startsWith("application/vnd.ms-excel")
         || type.startsWith("application/vnd.openxmlformats-officedocument.wordprocessingml.document")
         || type.startsWith("application/msword")
-        || type.startsWith("application/pdf");
+        || type.startsWith("application/pdf")
+        || type.startsWith("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+        || type.startsWith("application/vnd.ms-excel.sheet.macroenabled.12")
+        || type.startsWith("application/vnd.ms-excel.template.macroenabled.12");
+  }
+
+  @Override
+  public boolean deleteVideoFile(List<String> fileIds) throws Exception {
+    try {
+      List<Video> tempVideoFiles = new ArrayList<>();
+      List<Video> tempSavedVideoFiles = new ArrayList<>();
+      for (String id : fileIds) {
+        var videoFile = videoRepo.findById(id).orElse(null);
+        if (Objects.nonNull(videoFile)) {
+          tempVideoFiles.add(videoFile);
+          videoFile.setRemovalFlag(true);
+          var savedVideo = videoRepo.save(videoFile);
+          if (Objects.nonNull(savedVideo)) {
+            tempSavedVideoFiles.add(savedVideo);
+          }
+        }
+      }
+      return tempVideoFiles.size() == tempSavedVideoFiles.size();
+
+    } catch (Exception e) {
+      throw new Exception(e.getMessage());
+    }
+  }
+
+  @Override
+  public boolean deleteImageFile(List<String> fileIds) throws Exception {
+    try {
+      List<Image> tempImageFiles = new ArrayList<>();
+      List<Image> tempSavedImageFiles = new ArrayList<>();
+      for (String id : fileIds) {
+        var imageFile = imageRepo.findById(id).orElse(null);
+        if (Objects.nonNull(imageFile)) {
+          tempImageFiles.add(imageFile);
+          imageFile.setRemovalFlag(true);
+          var savedImage = imageRepo.save(imageFile);
+          if (Objects.nonNull(savedImage)) {
+            tempSavedImageFiles.add(savedImage);
+          }
+        }
+      }
+      return tempImageFiles.size() == tempSavedImageFiles.size();
+    } catch (Exception e) {
+      throw new Exception(e.getMessage());
+    }
   }
 }

@@ -9,5 +9,8 @@ package com.example.demo.enums;
  */
 public enum FileTag {
   IMAGE,
-  VIDEO
+  VIDEO,
+  PROFILE,
+  COVER,
+  DOC
 }
