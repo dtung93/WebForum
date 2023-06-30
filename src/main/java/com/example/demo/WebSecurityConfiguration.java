@@ -36,6 +36,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Class
@@ -69,7 +70,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    http.csrf().ignoringAntMatchers("/api/auth/sign-in", "/api/auth/sign-up","/api/mail/**","/api/modify-user/**","/home/**","/api/post/**","/api/file/**","/api/dxt/mod/auth/**","/api/dxt/admin/auth/**").and().authorizeRequests()
+    http.cors().and().csrf().ignoringAntMatchers("/api/auth/sign-in", "/api/auth/sign-up","/api/mail/**","/api/modify-user/**","/home/**","/api/post/**","/api/file/**","/api/dxt/mod/auth/**","/api/dxt/admin/auth/**").and().authorizeRequests()
         .antMatchers("/home/**").permitAll().
         antMatchers("/api/post/**").hasAnyRole("USER","MODERATOR","ADMIN").
         antMatchers("/api/file/**").hasAnyRole("USER","MODERATOR","ADMIN").
@@ -84,9 +85,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(Arrays.asList("http://localhost:4201"));
+    configuration.setAllowedOrigins(List.of("http://localhost:4201"));
     configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-    configuration.setAllowedHeaders(Arrays.asList("*"));
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", configuration);
     return source;
