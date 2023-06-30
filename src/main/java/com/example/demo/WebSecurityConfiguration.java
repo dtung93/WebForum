@@ -24,11 +24,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -73,6 +79,18 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         antMatchers("/api/dxt/admin/auth/**").hasRole("ADMIN").
         anyRequest().authenticated().and().apply(new JwtConfigurer(jwtTokenProvider)).and().exceptionHandling().accessDeniedHandler(accessDeniedHandler());
   }
+
+  //CORS configuration
+  @Bean
+  public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration configuration = new CorsConfiguration();
+    configuration.setAllowedOrigins(Arrays.asList("http://localhost:4201"));
+    configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+    configuration.setAllowedHeaders(Arrays.asList("*"));
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
+    return source;
+  }
   @Bean
   public AccessDeniedHandler accessDeniedHandler() {
     return (request, response, accessDeniedException) -> {
@@ -89,7 +107,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
       response.getWriter().write(new ObjectMapper().writeValueAsString(exceptionDTO));
     };
   }
-
 
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();

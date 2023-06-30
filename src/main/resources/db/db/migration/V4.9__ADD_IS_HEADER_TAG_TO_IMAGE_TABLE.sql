@@ -1,0 +1,3 @@
+ALTER TABLE image
+    ADD COLUMN is_header NUMERIC(1,0) NOT NULL DEFAULT 0;
+

@@ -208,7 +208,7 @@ public class GoogleDriveFileServiceImpl implements GoogleDriveFileService {
   }
 
   @Override
-  public List<GoogleDriveFileDTO> uploadUserFile(List<MultipartFile> files, FileTag fileTag) throws IOException {
+  public List<GoogleDriveFileDTO> uploadUserFile(List<MultipartFile> files, FileTag fileTag, boolean profilePhoto) throws IOException {
     String username = utils.getCurrentUsername();
     Drive driveService = getDriveService();
     List<GoogleDriveFileDTO> uploadedFiles = new ArrayList<>();
@@ -236,6 +236,11 @@ public class GoogleDriveFileServiceImpl implements GoogleDriveFileService {
         image.setRemovalFlag(false);
         image.setDownloadLink(uploadedFile.getWebContentLink());
         image.setViewLink(uploadedFile.getThumbnailLink());
+        if (profilePhoto == true) {
+          image.setIsProfilePhoto(true);
+        } else {
+          image.setIsProfilePhoto(false);
+        }
         UserPhoto savedImage = userPhotoRepo.save(image);
         if (Objects.nonNull(savedImage)) {
           GoogleDriveFileDTO googleDriveFileDTO = new GoogleDriveFileDTO();

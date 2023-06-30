@@ -50,4 +50,7 @@ public class Image extends Information implements Serializable {
   @Column(name="web_view_link")
   private String webViewLink;
 
+  @Column(name="is_header")
+  private Boolean isHeader;
+
 }

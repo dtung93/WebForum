@@ -55,14 +55,15 @@ public class ModifyUserController {
   public ResponseEntity<?> uploadUserFile(HttpServletRequest http,
                                           @PathVariable("username") String username,
                                           @RequestParam("files") List<MultipartFile> files,
-                                          @RequestParam("fileTag") FileTag fileTag) {
+                                          @RequestParam("fileTag") FileTag fileTag,
+                                          @RequestParam("isProfilePhoto") boolean isProfilePhoto
+  ) {
     try {
-      var result = googleDriveFileService.uploadUserFile(files,fileTag);
+      var result = googleDriveFileService.uploadUserFile(files, fileTag, isProfilePhoto);
       if (!result.isEmpty()) {
         return ResponseEntity.ok(new ResponseDTO(200, http.getRequestURI(), result, new Date().toString()));
-      }
-      else
-        return ResponseEntity.internalServerError().body(utils.errorResult(http,"500","Could not upload the files!"));
+      } else
+        return ResponseEntity.internalServerError().body(utils.errorResult(http, "500", "Could not upload the files!"));
     } catch (Exception e) {
       return ResponseEntity.internalServerError().body(utils.handleError(http, 2, e));
     }

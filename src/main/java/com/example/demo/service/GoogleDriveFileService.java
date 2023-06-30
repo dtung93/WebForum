@@ -22,7 +22,7 @@ import java.util.List;
 @Service
 public interface GoogleDriveFileService {
   List<GoogleDriveFileDTO> uploadFile(List<MultipartFile> files,Long postId) throws IOException;
-  List<GoogleDriveFileDTO> uploadUserFile(List<MultipartFile> files, FileTag fileTag) throws IOException;
+  List<GoogleDriveFileDTO> uploadUserFile(List<MultipartFile> files, FileTag fileTag, boolean profilePhoto) throws IOException;
 
   Drive getDriveService() throws IOException;
   boolean deleteVideoFile(List<String> fileIds) throws Exception;

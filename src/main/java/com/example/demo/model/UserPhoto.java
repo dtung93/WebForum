@@ -46,6 +46,9 @@ public class UserPhoto extends Information implements Serializable{
   @Column(name="download_link")
   private String downloadLink;
 
+  @Column(name="is_profile_photo")
+  private Boolean isProfilePhoto;
+
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name="user_id")
   private User user;
