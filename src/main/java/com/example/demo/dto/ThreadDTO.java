@@ -19,10 +19,9 @@ import javax.persistence.Enumerated;
 @Getter
 @Setter
 public class ThreadDTO extends Information {
-
+  private Long id;
   private String title;
 
-  @Enumerated(EnumType.STRING)
   private ThreadCategory category;
 
   private String author;

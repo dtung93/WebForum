@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,6 +21,8 @@ import java.util.Map;
 @Service
 public interface ThreadService {
   Map<String,Object> getThreadByCategory(ThreadCategory category, int pageNumber,int pageSize);
+  List<Map<String,Object>> getAllThread();
+
 
   Map<String,Object> createThread(NewThreadDTO request);
 }

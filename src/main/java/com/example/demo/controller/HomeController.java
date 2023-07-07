@@ -19,9 +19,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Class
@@ -51,6 +49,7 @@ public class HomeController {
       return ResponseEntity.internalServerError().body("FAILED TEST");
   }
 
+
   @GetMapping("/{threadCategory}")
   public ResponseEntity<?> getThreadByCat(HttpServletRequest http, @PathVariable ThreadCategory threadCategory,
                                           @RequestParam(defaultValue = "0") int pageNumber,
@@ -61,6 +60,18 @@ public class HomeController {
       output = threadService.getThreadByCategory(threadCategory, pageNumber, pageSize);
       return ResponseEntity.ok(output);
     } catch (Exception e) {
+      return ResponseEntity.internalServerError().body(utils.handleError(http, 2, e));
+    }
+  }
+
+  @GetMapping("/")
+  public ResponseEntity<?> getAllThread(HttpServletRequest http){
+    try{
+      List<Map<String,Object>> result = new ArrayList<>();
+      result = threadService.getAllThread();
+      return ResponseEntity.ok(result);
+    }
+    catch (Exception e){
       return ResponseEntity.internalServerError().body(utils.handleError(http, 2, e));
     }
   }
