@@ -91,8 +91,11 @@ public class PostServiceImpl implements PostService {
         post.setCreatedDate(new Date());
         post.setUpdatedBy(user.getUsername());
         post.setContent(content);
+        thread.setUpdatedDate(post.getUpdatedDate());
+        thread.setUpdatedBy(post.getUpdatedBy());
+        Thread savedThread = threadRepo.save(thread);
         Post savedPost = postRepo.save(post);
-        if (Objects.nonNull(savedPost)) {
+        if (Objects.nonNull(savedPost) && Objects.nonNull(savedThread)) {
           PostDTO output = mapper.map(savedPost, PostDTO.class);
           output.setAuthor(savedPost.getCreatedBy());
           result.put("New comment", output);

@@ -52,6 +52,11 @@ public class ThreadServiceImpl implements ThreadService {
     return threadRepo.getAllThread();
   }
 
+  @Override
+  public List<Map<String,Object>> getPostCountByThread(List<Long> threadIds) {
+    return threadRepo.getPostCountByThreadId(threadIds);
+  }
+
   public Map<String, Object> createNewThread(NewThreadDTO request) {
     User user = userRepo.findByUsername(request.getAuthor());
     Map<String, Object> result = new HashMap<>();

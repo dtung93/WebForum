@@ -79,7 +79,7 @@ public class PostController {
   @GetMapping("thread")
   public ResponseEntity<?> goToThread(HttpServletRequest http, @RequestParam("threadId") Long threadId,
                                       @RequestParam(defaultValue = "0") int pageNumber,
-                                      @RequestParam(defaultValue = "30") int pageSize
+                                      @RequestParam(defaultValue = "18") int pageSize
   ) {
     try {
       Map<String, Object> result = postService.getPostByThread(threadId, pageNumber, pageSize);

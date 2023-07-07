@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Class
@@ -53,11 +54,21 @@ public class HomeController {
   @GetMapping("/{threadCategory}")
   public ResponseEntity<?> getThreadByCat(HttpServletRequest http, @PathVariable ThreadCategory threadCategory,
                                           @RequestParam(defaultValue = "0") int pageNumber,
-                                          @RequestParam(defaultValue = "30") int pageSize
+                                          @RequestParam(defaultValue = "18") int pageSize
   ) {
     try {
       Map<String, Object> output = new HashMap<>();
+      List<Long> threadIds = new ArrayList<>();
       output = threadService.getThreadByCategory(threadCategory, pageNumber, pageSize);
+      var items = (ArrayList) output.get("items");
+      for(var item: items){
+          if(item.getClass().{
+            ThreadDTO threadDTO = (ThreadDTO) item;
+            threadIds.add(((ThreadDTO) item).getId());
+          }
+      }
+      var threadPostCount = threadService.getPostCountByThread(threadIds);
+      output.put("threadPostCountInfo", threadPostCount);
       return ResponseEntity.ok(output);
     } catch (Exception e) {
       return ResponseEntity.internalServerError().body(utils.handleError(http, 2, e));
@@ -65,14 +76,14 @@ public class HomeController {
   }
 
   @GetMapping("/")
-  public ResponseEntity<?> getAllThread(HttpServletRequest http){
-    try{
-      List<Map<String,Object>> result = new ArrayList<>();
+  public ResponseEntity<?> getAllThread(HttpServletRequest http) {
+    try {
+      List<Map<String, Object>> result = new ArrayList<>();
       result = threadService.getAllThread();
       return ResponseEntity.ok(result);
-    }
-    catch (Exception e){
+    } catch (Exception e) {
       return ResponseEntity.internalServerError().body(utils.handleError(http, 2, e));
     }
   }
+
 }
