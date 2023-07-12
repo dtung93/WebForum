@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.SignUpDTO;
 import com.example.demo.service.AdminService;
 import com.example.demo.service.ModeratorService;
+import com.example.demo.service.PostService;
 import com.example.demo.utilities.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
@@ -34,6 +35,9 @@ public class AdminController {
   @Autowired
   private AdminService adminService;
 
+  @Autowired
+  private PostService postService;
+
 
   @PostMapping("/change-role")
   public ResponseEntity<?> changeUserRole(HttpServletRequest http, @RequestParam String username, @RequestParam Long roleId) {
@@ -49,6 +53,22 @@ public class AdminController {
         return ResponseEntity.internalServerError().body(utils.errorResult(http, "Change role failed", "Could not change user role"));
     } catch (Exception e) {
       return ResponseEntity.internalServerError().body(utils.handleError(http, 2, e));
+    }
+  }
+
+  @PostMapping("/delete-post/{postId}")
+  public ResponseEntity<?> deletePost(HttpServletRequest http, @PathVariable Long postId){
+    try{
+      var result = postService.removePost(postId);
+      if(Boolean.TRUE.equals(result)){
+        return ResponseEntity.ok("Post with id= "+postId+ " has been removed");
+      }
+      else{
+        return ResponseEntity.internalServerError().body("Failed to remove post with id= " + postId);
+      }
+    }
+    catch(Exception e){
+      return ResponseEntity.internalServerError().body(utils.handleError(http,2,e));
     }
   }
 }

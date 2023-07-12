@@ -17,6 +17,11 @@ import java.util.Map;
  */
 @Service
 public interface PostService {
-  Map<String,Object> getPostByThread(Long threadId, int pageNumber, int pageSize);
+  PostDTO editPost(Long postId, Post post);
+
+  boolean removePost(Long postId);
+
+  Map<String, Object> getPostByThread(Long threadId, int pageNumber, int pageSize);
+
   Map<String, Object> comment(String username, Long threadId, String content);
 }

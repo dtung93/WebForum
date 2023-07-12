@@ -52,10 +52,6 @@ public class ThreadServiceImpl implements ThreadService {
     return threadRepo.getAllThread();
   }
 
-  @Override
-  public List<Map<String,Object>> getPostCountByThread(List<Long> threadIds) {
-    return threadRepo.getPostCountByThreadId(threadIds);
-  }
 
   public Map<String, Object> createNewThread(NewThreadDTO request) {
     User user = userRepo.findByUsername(request.getAuthor());
@@ -86,12 +82,13 @@ public class ThreadServiceImpl implements ThreadService {
         Post savedPost = postRepo.save(post);
         if (Objects.nonNull(savedPost)) {
           savedThread.getPosts().add(savedPost);
+          savedThread.setPostCount(1);
           var resultThread = threadRepo.save(savedThread);
           ModelMapper mapper = new ModelMapper();
           ThreadDTO finalResult = mapper.map(resultThread, ThreadDTO.class);
           finalResult.setAuthor(request.getAuthor());
           finalResult.setCategory(resultThread.getCategory());
-          finalResult.setReplies(0);
+          finalResult.setPostCount(1);
           finalResult.setViews(0);
           result.put("thread", finalResult);
         } else

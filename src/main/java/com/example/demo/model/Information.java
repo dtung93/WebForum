@@ -27,7 +27,6 @@ public class Information {
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "created_date",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     protected Date createdDate;
 
@@ -37,7 +36,6 @@ public class Information {
 
     @LastModifiedDate
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "updated_date",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     protected Date updatedDate;
 }

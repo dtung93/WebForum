@@ -60,15 +60,6 @@ public class HomeController {
       Map<String, Object> output = new HashMap<>();
       List<Long> threadIds = new ArrayList<>();
       output = threadService.getThreadByCategory(threadCategory, pageNumber, pageSize);
-      var items = (ArrayList) output.get("items");
-      for(var item: items){
-          if(item.getClass().{
-            ThreadDTO threadDTO = (ThreadDTO) item;
-            threadIds.add(((ThreadDTO) item).getId());
-          }
-      }
-      var threadPostCount = threadService.getPostCountByThread(threadIds);
-      output.put("threadPostCountInfo", threadPostCount);
       return ResponseEntity.ok(output);
     } catch (Exception e) {
       return ResponseEntity.internalServerError().body(utils.handleError(http, 2, e));

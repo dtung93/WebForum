@@ -22,7 +22,6 @@ import java.util.Map;
 public interface ThreadService {
   Map<String,Object> getThreadByCategory(ThreadCategory category, int pageNumber,int pageSize);
   List<Map<String,Object>> getAllThread();
-  List<Map<String,Object>> getPostCountByThread(List<Long> threadIds);
 
   Map<String,Object> createThread(NewThreadDTO request);
 }

@@ -23,15 +23,11 @@ import java.util.Optional;
  */
 @Repository
 public interface ThreadRepo extends JpaRepository<Thread, Long> {
-  @Query("SELECT t FROM Thread t WHERE t.id = :id")
+  @Query("SELECT t FROM Thread t WHERE t.id = :id and  t.removalFlag = false")
   Page<Thread> getThreadById(@Param("id") Long id, Pageable pageable);
 
-  @Query("SELECT t FROM Thread t WHERE t.category = :category")
+  @Query("SELECT t FROM Thread t WHERE t.category = :category and t.removalFlag = false")
   Page<Thread> getThreadByCategory(@Param("category") ThreadCategory category, Pageable pageable);
-
-  @Query(nativeQuery = true, value = "SELECT t.id as thread_id, COUNT(p.id) as post_count FROM post p INNER JOIN thread t ON p.thread_id = t.id " +
-      "WHERE t.id in (:threadIds) GROUP BY t.id")
-  List<Map<String,Object>> getPostCountByThreadId(@Param("threadIds") List<Long> threadIds);
 
   @Query(nativeQuery = true, value = "" +
       "select t.id as id, t.category as category, t.title as thread_title, t.views as views," +

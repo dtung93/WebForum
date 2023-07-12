@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import java.util.Date;
 
 /**
  * Class
@@ -26,6 +27,7 @@ public class ThreadDTO extends Information {
 
   private String author;
   private Integer views;
-  private Integer replies;
+  private Integer postCount;
+
 
 }

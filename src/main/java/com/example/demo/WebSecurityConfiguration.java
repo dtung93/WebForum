@@ -72,7 +72,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http.cors().and().csrf().ignoringAntMatchers("/api/auth/sign-in", "/api/auth/sign-up","/api/mail/**","/api/modify-user/**","/home/**","/api/post/**","/api/file/**","/api/dxt/mod/auth/**","/api/dxt/admin/auth/**").and().authorizeRequests()
         .antMatchers("/home/**").permitAll().
-        antMatchers("/api/post/**").hasAnyRole("USER","MODERATOR","ADMIN").
+        antMatchers("/api/post/**").permitAll().
         antMatchers("/api/file/**").hasAnyRole("USER","MODERATOR","ADMIN").
         antMatchers("/api/auth/sign-in", "/api/auth/sign-up").permitAll().
         antMatchers("/api/mail/**").permitAll().antMatchers("/api/modify-user/**").permitAll().

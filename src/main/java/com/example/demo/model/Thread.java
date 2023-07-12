@@ -49,6 +49,9 @@ public class Thread extends Information implements Serializable {
   @Column(name = "views")
   private Long views;
 
+  @Column(name = "post_count")
+  private Integer postCount;
+
   @Column(name = "removal_flag")
   private Boolean removalFlag;
 

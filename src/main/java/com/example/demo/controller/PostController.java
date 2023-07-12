@@ -92,6 +92,23 @@ public class PostController {
     }
   }
 
+  @PreAuthorize("#username == authentication.name")
+  @PostMapping("/delete-post/{postId}/by/{username}")
+  public ResponseEntity<?> deletePost(HttpServletRequest http, @PathVariable Long postId,@PathVariable String username ){
+    try{
+      var result = postService.removePost(postId);
+      if(Boolean.TRUE.equals(result)){
+        return ResponseEntity.ok("Post with id= "+postId+ " has been removed");
+      }
+      else{
+        return ResponseEntity.internalServerError().body("Failed to remove post with id= " + postId);
+      }
+    }
+    catch(Exception e){
+      return ResponseEntity.internalServerError().body(utils.handleError(http,2,e));
+    }
+  }
+
   private ExceptionDTO handleError(HttpServletRequest http, Map<String, Object> map) {
     ExceptionDTO exceptionDTO = new ExceptionDTO();
     exceptionDTO.setError("Exception");
